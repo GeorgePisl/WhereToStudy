@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="217dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/purple_700"
         android:text="Grant Permission"
         android:textAllCaps="false"
         android:textColor="#FFFFFF" />
