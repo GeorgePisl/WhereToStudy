@@ -85,8 +85,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-
-
         materialSearchBar = findViewById(R.id.searchBar);
         btnFind = findViewById(R.id.btn_find);
         rippleBg = findViewById(R.id.ripple_bg);
@@ -94,7 +92,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapView = mapFragment.getView();
-
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapActivity.this);
         Places.initialize(MapActivity.this, getString(R.string.google_maps_api));
@@ -104,6 +101,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
+
             }
 
             @Override
@@ -114,8 +112,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onButtonClicked(int buttonCode) {
                 if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
-
-                } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                    //opening or closing a navigation drawer
+                }
+                else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     materialSearchBar.closeSearch();
                 }
             }
@@ -130,7 +129,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 FindAutocompletePredictionsRequest predictionsRequest = FindAutocompletePredictionsRequest.builder()
-                        .setTypeFilter(TypeFilter.ADDRESS)
+                        .setCountry("it")
                         .setSessionToken(token)
                         .setQuery(s.toString())
                         .build();
@@ -234,7 +233,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -244,23 +242,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
         if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
-            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-            layoutParams.setMargins(0, 0, 40, 350);
-        }
-
-        if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
             View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("1"));
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-            layoutParams.setMargins(0, 0, 40, 500);
+            layoutParams.setMargins(0, 0, 40, 400);
         }
 
+        if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
+            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            layoutParams.setMargins(0, 0, 40, 250);
+        }
 
-        //Check if GPS is enabled or not and then request user to enable it
+        //check if gps is enabled or not and then request user to enable it
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(5000);
@@ -292,6 +289,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                if (materialSearchBar.isSuggestionsVisible())
+                    materialSearchBar.clearSuggestions();
+                if (materialSearchBar.isSearchOpened())
+                    materialSearchBar.closeSearch();
+                return false;
+            }
+        });
     }
 
     @Override
