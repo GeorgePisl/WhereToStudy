@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "14893197695",
+    "firebase_url": "https://wheretostudy-7587a.firebaseio.com",
+    "project_id": "wheretostudy-7587a",
+    "storage_bucket": "wheretostudy-7587a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14893197695:android:9e4671106c79b9a3d9924a",
+        "android_client_info": {
+          "package_name": "com.example.wheretostudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14893197695-00kst25jjf40vs12qb3qn52qvg2ocefg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD10Il1JofSDW6fPsBxDEevUJA7e-XMWlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14893197695-00kst25jjf40vs12qb3qn52qvg2ocefg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
