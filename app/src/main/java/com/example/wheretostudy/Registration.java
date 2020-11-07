@@ -48,7 +48,7 @@ import java.util.UUID;
 
 public class Registration extends AppCompatActivity {
 
-    EditText eUsername, eEmail, ePassword;
+    EditText eUsername, eEmail, ePassword, eConfirm;
     Button registerbtn;
     FirebaseAuth mAuth;
     private ImageView profilePic;
@@ -56,8 +56,8 @@ public class Registration extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     TextView tvCancel;
-    ImageView visible;
-    ImageView notVisible;
+    ImageView visible, visible2;
+    ImageView notVisible, notVisible2;
     ProgressDialog pdRegistration;
     boolean uploaded = false;
     DatabaseReference databaseReference;
@@ -71,11 +71,14 @@ public class Registration extends AppCompatActivity {
                 eUsername = findViewById(R.id.editTextUsername);
                 eEmail = (EditText) findViewById(R.id.emailRegister);
                 ePassword = (EditText) findViewById(R.id.passwordRegister);
+                eConfirm =(EditText) findViewById(R.id.confirmPasswordRegister);
 
                 profilePic = (ImageView) findViewById(R.id.profilePicture);
 
                 visible = (ImageView) findViewById(R.id.visibility_on);
                 notVisible = (ImageView) findViewById(R.id.visibility_off);
+                visible2 = (ImageView) findViewById(R.id.visibility_on_confirm);
+                notVisible2 = (ImageView) findViewById(R.id.visibility_off_confirm);
 
                 pdRegistration = new ProgressDialog(this);
 
@@ -104,6 +107,24 @@ public class Registration extends AppCompatActivity {
                         ePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                         visible.setVisibility(View.VISIBLE);
                         notVisible.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+                visible2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        eConfirm.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        visible2.setVisibility(View.INVISIBLE);
+                        notVisible2.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                notVisible2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        eConfirm.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        visible2.setVisibility(View.VISIBLE);
+                        notVisible2.setVisibility(View.INVISIBLE);
                     }
                 });
 
@@ -216,6 +237,16 @@ public class Registration extends AppCompatActivity {
                 }
                 else if (ePassword.getText().length() < 6) {
                     Toast.makeText(Registration.this, "Password need at least 6 characters", Toast.LENGTH_SHORT).show();
+                    result = false;
+                }
+
+                if (TextUtils.isEmpty(eConfirm.getText())) {
+                    eConfirm.setError("Confirm password");
+                    result = false;
+
+                }
+                else if (ePassword.getText().toString() != eConfirm.getText().toString()) {
+                    Toast.makeText(Registration.this, "Your passwords do not match!", Toast.LENGTH_LONG).show();
                     result = false;
                 }
 

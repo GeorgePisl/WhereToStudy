@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
