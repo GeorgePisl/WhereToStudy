@@ -139,6 +139,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordText" />
 
+    <TextView
+        android:id="@+id/confirmPasswordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Password"
+        android:textColor="@color/purple_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordRegister" />
+
+
+    <EditText
+        android:id="@+id/confirmPasswordRegister"
+        android:layout_width="300dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:paddingLeft="4dp"
+        android:textCursorDrawable="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordText" />
+
     <ImageView
                 android:id="@+id/visibility_on"
                 android:layout_width="30dp"
@@ -168,15 +196,44 @@
         app:layout_constraintTop_toBottomOf="@+id/emailRegister"
         app:srcCompat="@drawable/ic_visibility_off" />
 
+    <ImageView
+        android:id="@+id/visibility_on_confirm"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="35dp"
+        android:tint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
+        app:srcCompat="@drawable/ic_visibility" />
+
+    <ImageView
+        android:id="@+id/visibility_off_confirm"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="invisible"
+        android:tint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
+        app:srcCompat="@drawable/ic_visibility_off" />
+
 
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="100dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/my_button_bg"
         android:onClick="register"
-        android:text="Next"
+        android:text="Confirm"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
         app:layout_constraintEnd_toEndOf="parent"
