@@ -37,6 +37,7 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
@@ -46,11 +47,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -83,7 +87,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.nav_activity_map);
 
         materialSearchBar = findViewById(R.id.searchBar);
         btnFind = findViewById(R.id.btn_find);
@@ -231,6 +235,36 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             }
         });
+
+        //part for navigation drawer
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               if(item.getItemId() == R.id.nav_home){
+
+               }
+               else if (item.getItemId() == R.id.nav_test){
+                    Intent myIntent = new Intent(MapActivity.this, TestActivity.class);
+                    MapActivity.this.startActivity(myIntent);
+                }
+               DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+               drawerLayout.closeDrawer(GravityCompat.START);
+               return true;
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @SuppressLint("MissingPermission")
