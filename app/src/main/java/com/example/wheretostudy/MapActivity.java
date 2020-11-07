@@ -228,7 +228,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void run() {
                         rippleBg.stopRippleAnimation();
-                        startActivity(new Intent(MapActivity.this, MainActivity.class));
+                        startActivity(new Intent(MapActivity.this, TestActivity.class));
                         finish();
                     }
                 }, 3000);
