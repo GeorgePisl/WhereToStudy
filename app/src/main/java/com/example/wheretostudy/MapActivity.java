@@ -1,6 +1,8 @@
 package com.example.wheretostudy;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
@@ -51,11 +53,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Handler;
+import android.renderscript.ScriptGroup;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -111,7 +115,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
-                startSearch(text.toString(), true, null, true);
+                //Toast.makeText(MapActivity.this, "RICERCA", Toast.LENGTH_SHORT).show();
+                //startSearch(text.toString(), true, null, true);
+                materialSearchBar.clearSuggestions();
+                materialSearchBar.closeSearch();
             }
 
             @Override
@@ -122,6 +129,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     drawerLayout.openDrawer(Gravity.LEFT);
                 }
                 else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                    materialSearchBar.clearSuggestions();
                     materialSearchBar.closeSearch();
                 }
             }
@@ -258,16 +266,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
 
-
-
-
-
-
-
-
-
-
-
     }
 
     @SuppressLint("MissingPermission")
@@ -385,5 +383,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                 });
     }
+
 }
 
