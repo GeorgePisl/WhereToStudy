@@ -14,6 +14,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -277,6 +280,7 @@ public class Registration extends AppCompatActivity {
                                         pdRegistration.show();
 
                                         mAuth.createUserWithEmailAndPassword(eMail, passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -357,6 +361,20 @@ public class Registration extends AppCompatActivity {
                                     Intent intent = new Intent(Registration.this, PermissionActivity.class);
                                     intent.putExtra("username", eUsername.getText());
                                     startActivity(intent);
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(eUsername.getText().toString()).build();
+
+                                    user.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.i("UTENTEEEE", "User profile updated.");
+                                                    }
+                                                }
+                                            });
                                 } else {
                                     pdRegistration.dismiss();
                                     Toast.makeText(Registration.this, "Registration Failed", Toast.LENGTH_SHORT).show();

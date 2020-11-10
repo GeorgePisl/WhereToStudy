@@ -212,10 +212,11 @@ public class ChatActivity extends AppCompatActivity {
             // of ChatMessage to the Firebase database
             FirebaseDatabase.getInstance()
                     .getReference().child("chats")
-                    .push()
+                    .push()                                             //getReference("Clients")
                     .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
             msg.setText("");
-            Toast.makeText(this, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
+            Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
         } else {
             Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
         }

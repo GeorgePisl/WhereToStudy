@@ -35,6 +35,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 public class Login extends AppCompatActivity {
@@ -169,8 +170,22 @@ public class Login extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(Login.this, "Authentication succeded", Toast.LENGTH_SHORT).show();
                             if (user!=null){
-                                startActivity(new Intent(Login.this, PermissionActivity.class));
 
+
+
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(user.getDisplayName()).build();
+
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.i("UTENTEEEE", "User profile updated.");
+                                                }
+                                            }
+                                        });
+                                startActivity(new Intent(Login.this, PermissionActivity.class));
                             }
                         }
                         else {
@@ -231,6 +246,7 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 progressDialog.dismiss();
                                 startActivity(new Intent(Login.this, PermissionActivity.class));
+
 
                             } else {
                                 progressDialog.dismiss();
