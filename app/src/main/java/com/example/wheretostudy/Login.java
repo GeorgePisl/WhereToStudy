@@ -64,6 +64,7 @@ public class Login extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         FirebaseUser user = mAuth.getCurrentUser();
 
+
                 if (user != null){
                     finish();
                     startActivity(new Intent(Login.this, MapActivity.class));

@@ -245,7 +245,7 @@ public class Registration extends AppCompatActivity {
                     result = false;
 
                 }
-                else if (ePassword.getText().toString() != eConfirm.getText().toString()) {
+                else if (!ePassword.getText().toString().equals(eConfirm.getText().toString())) {
                     Toast.makeText(Registration.this, "Your passwords do not match!", Toast.LENGTH_LONG).show();
                     result = false;
                 }
