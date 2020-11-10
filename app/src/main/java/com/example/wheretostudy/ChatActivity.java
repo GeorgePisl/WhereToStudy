@@ -109,11 +109,11 @@ public class ChatActivity extends AppCompatActivity {
                     TextView messageTime = (TextView) v.findViewById(R.id.message_time);
                     TextView messageUser = (TextView) v.findViewById(R.id.message_user);
 
-                    // if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+                    if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
                     messageLayout.setBackgroundResource(R.drawable.bubble2);
                     params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     messageLayout.setLayoutParams(params);
-            /*
+
                 }
                 // If not my message then align to left
                 else {
@@ -121,7 +121,7 @@ public class ChatActivity extends AppCompatActivity {
                     params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                     messageLayout.setLayoutParams(params);
                 }
-*/
+
 
                     messageText.setText(model.getMessageText());
                     messageUser.setText(model.getMessageUser());
