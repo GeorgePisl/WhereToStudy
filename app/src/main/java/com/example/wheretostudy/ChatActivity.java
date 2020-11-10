@@ -81,8 +81,8 @@ public class ChatActivity extends AppCompatActivity {
 
 
             Query query = FirebaseDatabase.getInstance().getReference().child("chats");
-            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-            database.keepSynced(true);
+            //DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+            //database.keepSynced(true);
             Log.i("TAAAAAAAAAAAAG", "sono arrivato qui");
 //The error said the constructor expected FirebaseListOptions - here you create them:
             FirebaseListOptions<ChatMessage> options = new FirebaseListOptions.Builder<ChatMessage>()
