@@ -38,6 +38,12 @@ public class ChatActivity extends AppCompatActivity {
     private static final int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<ChatMessage> adapter;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -64,8 +70,72 @@ public class ChatActivity extends AppCompatActivity {
             // a welcome Toast
 
 
-            displayChatMessages();
+            //Log.i("TAAAAAAAAAAAAG", "sono arrivato quddddddi");
+            ListView messageList = (ListView) findViewById(R.id.messagesList);
+            messageList.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+            messageList.setStackFromBottom(true);
+
+
+            //adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message_layout,
+            //     FirebaseDatabase.getInstance().getReference()) {
+
+
+            Query query = FirebaseDatabase.getInstance().getReference().child("chats");
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+            database.keepSynced(true);
+            Log.i("TAAAAAAAAAAAAG", "sono arrivato qui");
+//The error said the constructor expected FirebaseListOptions - here you create them:
+            FirebaseListOptions<ChatMessage> options = new FirebaseListOptions.Builder<ChatMessage>()
+                    .setQuery(query, ChatMessage.class)
+                    .setLayout(R.layout.message_layout)
+                    .build();
+
+
+
+
+            //Finally you pass them to the constructor here:
+            adapter = new FirebaseListAdapter<ChatMessage>(options){
+
+
+                @Override
+                protected void populateView(View v, ChatMessage model, int position) {
+                    Log.i("MESSAGGIO", "prova di nuovo");
+                    //get the views
+                    RelativeLayout messageLayout = (RelativeLayout) v.findViewById(R.id.message_bubble_layout);
+                    RelativeLayout messageLayoutParent = (RelativeLayout) v.findViewById(R.id.message_bubble_layout_parent);
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) messageLayout.getLayoutParams();
+
+                    TextView messageText = (TextView) v.findViewById(R.id.message_text);
+                    TextView messageTime = (TextView) v.findViewById(R.id.message_time);
+                    TextView messageUser = (TextView) v.findViewById(R.id.message_user);
+
+                    // if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+                    messageLayout.setBackgroundResource(R.drawable.bubble2);
+                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    messageLayout.setLayoutParams(params);
+            /*
+                }
+                // If not my message then align to left
+                else {
+                    messageLayout.setBackgroundResource(R.drawable.bubble1);
+                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    messageLayout.setLayoutParams(params);
+                }
+*/
+
+                    messageText.setText(model.getMessageText());
+                    messageUser.setText(model.getMessageUser());
+                    messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
+                    Log.i("MESSAGGIO", model.getMessageText());
+
+
+                }
+            };
+
+            messageList.setAdapter(adapter);
             Log.i("TAAAAAAAAAAAAG", "sono arrivato dido");
+        }
+
 
 /*
             if(FirebaseAuth.getInstance().getCurrentUser() == null){
@@ -88,7 +158,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 displayChatMessages();
             }*/
-        }
+
 /*
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -141,7 +211,7 @@ public class ChatActivity extends AppCompatActivity {
             // Read the input field and push a new instance
             // of ChatMessage to the Firebase database
             FirebaseDatabase.getInstance()
-                    .getReference()
+                    .getReference().child("chats")
                     .push()
                     .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
             msg.setText("");
@@ -149,76 +219,6 @@ public class ChatActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    private void displayChatMessages(){
-
-
-
-
-        //Log.i("TAAAAAAAAAAAAG", "sono arrivato quddddddi");
-        ListView messageList = (ListView) findViewById(R.id.messagesList);
-        messageList.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        messageList.setStackFromBottom(true);
-
-
-        //adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message_layout,
-         //     FirebaseDatabase.getInstance().getReference()) {
-
-
-        Query query = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        database.keepSynced(true);
-        Log.i("TAAAAAAAAAAAAG", "sono arrivato qui");
-//The error said the constructor expected FirebaseListOptions - here you create them:
-        FirebaseListOptions<ChatMessage> options = new FirebaseListOptions.Builder<ChatMessage>()
-                .setQuery(query, ChatMessage.class)
-                .setLayout(R.layout.message_layout)
-                .build();
-
-
-
-
-        //Finally you pass them to the constructor here:
-        adapter = new FirebaseListAdapter<ChatMessage>(options){
-
-
-            @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-                Log.i("MESSAGGIO", "prova di nuovo");
-                //get the views
-                RelativeLayout messageLayout = (RelativeLayout) v.findViewById(R.id.message_bubble_layout);
-                RelativeLayout messageLayoutParent = (RelativeLayout) v.findViewById(R.id.message_bubble_layout_parent);
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) messageLayout.getLayoutParams();
-
-                TextView messageText = (TextView) v.findViewById(R.id.message_text);
-                TextView messageTime = (TextView) v.findViewById(R.id.message_time);
-                TextView messageUser = (TextView) v.findViewById(R.id.message_user);
-
-               // if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
-                    messageLayout.setBackgroundResource(R.drawable.bubble2);
-                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    messageLayout.setLayoutParams(params);
-            /*
-                }
-                // If not my message then align to left
-                else {
-                    messageLayout.setBackgroundResource(R.drawable.bubble1);
-                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    messageLayout.setLayoutParams(params);
-                }
-*/
-
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-                messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
-                Log.i("MESSAGGIO", model.getMessageText());
-
-
-            }
-        };
-
-        messageList.setAdapter(adapter);
     }
 
 
