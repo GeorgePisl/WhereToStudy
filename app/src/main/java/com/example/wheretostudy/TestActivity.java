@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class TestActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
-    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,6 @@ public class TestActivity extends AppCompatActivity {
                     FacebookSdk.sdkInitialize(getApplicationContext());
                     LoginManager.getInstance().logOut();
                     AccessToken.setCurrentAccessToken(null);
-                    mGoogleSignInClient.signOut();
                     finish();
                     startActivity(new Intent(TestActivity.this, Login.class));
                     if (authStateListener != null) {
