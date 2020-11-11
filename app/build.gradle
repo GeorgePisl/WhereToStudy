@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation platform ('com.google.firebase:firebase-bom:26.0.0')
+    implementation 'com.google.android.gms:play-services-basement:17.4.0'
     implementation 'androidx.wear:wear:1.1.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

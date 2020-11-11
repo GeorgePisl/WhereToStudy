@@ -3,8 +3,10 @@ package com.example.wheretostudy;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -357,7 +359,6 @@ public class Login extends AppCompatActivity {
                                                 }
                                             }
                                         });
-                                finish();
                                 startActivity(new Intent(Login.this, PermissionActivity.class));
                             }
                         }
