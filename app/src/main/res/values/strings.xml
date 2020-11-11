@@ -30,6 +30,9 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="Registration">
+        Not registered yet? <b><u>REGISTER HERE</u> </b>.
+    </string>
 
 
 </resources>

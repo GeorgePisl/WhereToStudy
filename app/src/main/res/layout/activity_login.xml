@@ -70,27 +70,18 @@
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
-        android:id="@+id/not_registered"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="15dp"
-        android:text="Not Registered?"
-        android:textColor="#FFFFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogIn" />
-
-    <TextView
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
-        android:text="REGISTER"
+        android:contextClickable="false"
+        android:text="@string/Registration"
+        android:paddingTop="2dp"
+        android:textSize="14dp"
         android:textColor="#FFFFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/not_registered"
+        android:textIsSelectable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogIn" />
 
     <Button
@@ -144,7 +135,7 @@
         android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/not_registered" />
+        app:layout_constraintTop_toBottomOf="@+id/register" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_button"
