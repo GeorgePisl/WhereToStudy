@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class TestActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class TestActivity extends AppCompatActivity {
                     FacebookSdk.sdkInitialize(getApplicationContext());
                     LoginManager.getInstance().logOut();
                     AccessToken.setCurrentAccessToken(null);
+                    mGoogleSignInClient.signOut();
                     finish();
                     startActivity(new Intent(TestActivity.this, Login.class));
                     if (authStateListener != null) {

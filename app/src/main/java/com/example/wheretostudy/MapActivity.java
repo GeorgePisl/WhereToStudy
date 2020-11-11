@@ -12,6 +12,7 @@ import android.os.Bundle;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -103,6 +104,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +287,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                    FacebookSdk.sdkInitialize(getApplicationContext());
                    LoginManager.getInstance().logOut();
                    AccessToken.setCurrentAccessToken(null);
+                   mGoogleSignInClient.signOut();
                    finish();
                    startActivity(new Intent(MapActivity.this, Login.class));
                    if (authStateListener != null) {

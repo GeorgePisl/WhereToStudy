@@ -27,6 +27,7 @@ import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseListAdapter;
 
 import com.firebase.ui.database.FirebaseListOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseListAdapter<ChatMessage> adapter;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onStart() {
@@ -72,6 +74,7 @@ public class ChatActivity extends AppCompatActivity {
                                                                          FacebookSdk.sdkInitialize(getApplicationContext());
                                                                          LoginManager.getInstance().logOut();
                                                                          AccessToken.setCurrentAccessToken(null);
+                                                                         mGoogleSignInClient.signOut();
                                                                          finish();
                                                                          startActivity(new Intent(ChatActivity.this, Login.class));
                                                                          if (authStateListener != null) {
