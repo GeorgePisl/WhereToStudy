@@ -328,19 +328,16 @@ public class Login extends AppCompatActivity {
 
             private void signIn(){
                 Intent signInIntent = mGoogle.getSignInIntent();
-                Toast.makeText(Login.this, "Completato 1", Toast.LENGTH_SHORT).show();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
 
             }
 
 
             private void FirebaseGoogleAuth(String idToken){
-                Toast.makeText(Login.this, "Completato 3", Toast.LENGTH_SHORT).show();
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(idToken, null);
                 mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(Login.this, "Completato 4", Toast.LENGTH_SHORT).show();
                         if(task.isSuccessful()) {
                             Toast.makeText(Login.this, "Authentication succeded", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();

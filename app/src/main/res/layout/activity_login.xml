@@ -128,6 +128,8 @@
 
 
     <com.facebook.login.widget.LoginButton
+        xmlns:facebook="http://schemas.android.com/apk/res-auto"
+        facebook:com_facebook_login_text="Sign in with Facebook"
         android:id="@+id/login_button"
         android:layout_width="180dp"
         android:layout_height="50dp"
