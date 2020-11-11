@@ -45,7 +45,6 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseListAdapter<ChatMessage> adapter;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
-    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onStart() {

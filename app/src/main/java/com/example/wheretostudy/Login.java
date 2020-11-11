@@ -187,6 +187,7 @@ public class Login extends AppCompatActivity {
                 loginGoogle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         signIn();
                     }
                 });
@@ -327,6 +328,7 @@ public class Login extends AppCompatActivity {
             }
 
             private void signIn(){
+                mGoogle.signOut();
                 Intent signInIntent = mGoogle.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
 
