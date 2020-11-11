@@ -257,10 +257,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void run() {
                         rippleBg.stopRippleAnimation();
-                        startActivity(new Intent(MapActivity.this, TestActivity.class));
-                        finish();
                     }
-                }, 3000);
+                }, 2000);
+
+
+                DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
+                f_database.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            double latitude = (double) (snapshot.child("latitude").getValue());
+                            double longitude = (double) (snapshot.child("longitude").getValue());
+                            String name=snapshot.child("name").getValue().toString();
+                            LatLng location  = new LatLng(latitude, longitude);
+                            mMap.addMarker(new MarkerOptions().position(location).title(name));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), 14));
 
             }
         });
@@ -305,10 +324,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        /*LatLng sydney = new LatLng(41.891010, 12.503622);
-        googleMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("DIAG"));*/
+
 
         try {
             // Customise the styling of the base map using a JSON object defined
@@ -325,24 +341,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
 
-        DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
-        f_database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    double latitude = (double) (snapshot.child("latitude").getValue());
-                    double longitude = (double) (snapshot.child("longitude").getValue());
-                    String name=snapshot.child("name").getValue().toString();
-                    LatLng location  = new LatLng(latitude, longitude);
-                    googleMap.addMarker(new MarkerOptions().position(location).title(name));
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
         mMap.setMyLocationEnabled(true);
