@@ -28,6 +28,8 @@ import com.firebase.ui.database.FirebaseListAdapter;
 
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.GoogleApi;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseListAdapter<ChatMessage> adapter;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onStart() {

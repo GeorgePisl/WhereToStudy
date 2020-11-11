@@ -341,11 +341,11 @@ public class Login extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             Toast.makeText(Login.this, "Authentication succeded", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-                            if (account!=null){
+                            //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+                            if (user!=null){
 
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(account.getDisplayName()).build();
+                                        .setDisplayName(user.getDisplayName()).build();
 
                                 user.updateProfile(profileUpdates)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
