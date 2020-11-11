@@ -9,6 +9,9 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,6 +47,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -97,10 +101,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private final float DEFAULT_ZOOM = 18;
 
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener authStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_activity_map);
+
+        mAuth = FirebaseAuth.getInstance();
 
         materialSearchBar = findViewById(R.id.searchBar);
         btnFind = findViewById(R.id.btn_find);
@@ -270,6 +279,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                else if (item.getItemId() == R.id.nav_chat){
                    Intent myIntent = new Intent(MapActivity.this, ChatActivity.class);
                    MapActivity.this.startActivity(myIntent);
+               }
+               else if (item.getItemId() == R.id.nav_logout){
+                   mAuth.signOut();
+                   FacebookSdk.sdkInitialize(getApplicationContext());
+                   LoginManager.getInstance().logOut();
+                   AccessToken.setCurrentAccessToken(null);
+                   finish();
+                   startActivity(new Intent(MapActivity.this, Login.class));
+                   if (authStateListener != null) {
+                       mAuth.removeAuthStateListener(authStateListener);
+                   }
                }
                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                drawerLayout.closeDrawer(GravityCompat.START);

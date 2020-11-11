@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseListAdapter;
 
 import com.firebase.ui.database.FirebaseListOptions;
@@ -37,6 +40,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private static final int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<ChatMessage> adapter;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onStart() {
@@ -49,6 +54,7 @@ public class ChatActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.nav_activity_chat);
 
+            mAuth = FirebaseAuth.getInstance();
             //part for navigation drawer
             NavigationView navigationView = findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -60,6 +66,17 @@ public class ChatActivity extends AppCompatActivity {
 
                                                                      }
                                                                      else if (item.getItemId() == R.id.nav_test){
+                                                                     }
+                                                                     else if (item.getItemId() == R.id.nav_logout){
+                                                                         mAuth.signOut();
+                                                                         FacebookSdk.sdkInitialize(getApplicationContext());
+                                                                         LoginManager.getInstance().logOut();
+                                                                         AccessToken.setCurrentAccessToken(null);
+                                                                         finish();
+                                                                         startActivity(new Intent(ChatActivity.this, Login.class));
+                                                                         if (authStateListener != null) {
+                                                                             mAuth.removeAuthStateListener(authStateListener);
+                                                                         }
                                                                      }
                                                                      DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                                                                      drawerLayout.closeDrawer(GravityCompat.START);
