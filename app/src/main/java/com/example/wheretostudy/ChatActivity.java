@@ -52,6 +52,26 @@ public class ChatActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
+    public void postMessage(View v){
+        EditText msg = (EditText) findViewById(R.id.input);
+        String text = msg.getText().toString();
+        //Log.i("TAAAAAAAAAAAAG", "ciao dido");
+        if(text != null && !text.equals("")) {
+            // Read the input field and push a new instance
+            // of ChatMessage to the Firebase database
+            FirebaseDatabase.getInstance()
+                    .getReference().child("chats")
+                    .push()                                             //getReference("Clients")
+                    .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+            msg.setText("");
+            //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        } else {
+            Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -130,30 +150,28 @@ public class ChatActivity extends AppCompatActivity {
                     TextView messageUser = (TextView) v.findViewById(R.id.message_user);
 
                     if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
-                    messageLayout.setBackgroundResource(R.drawable.bubble2);
-                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    messageLayout.setLayoutParams(params);
-
-                }
-                // If not my message then align to left
-                else {
-                    messageLayout.setBackgroundResource(R.drawable.bubble1);
-                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    messageLayout.setLayoutParams(params);
-                }
-
+                        messageLayout.setBackgroundResource(R.drawable.bubble2);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        messageLayout.setLayoutParams(params);
+                    }
+                    // If not my message then align to left
+                    else {
+                        messageLayout.setBackgroundResource(R.drawable.bubble1);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                        messageLayout.setLayoutParams(params);
+                    }
 
                     messageText.setText(model.getMessageText());
                     messageUser.setText(model.getMessageUser());
                     messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
-                    Log.i("MESSAGGIO", model.getMessageText());
+                    //Log.i("MESSAGGIO", model.getMessageText());
 
 
                 }
             };
 
             messageList.setAdapter(adapter);
-            Log.i("TAAAAAAAAAAAAG", "sono arrivato dido");
+            //Log.i("TAAAAAAAAAAAAG", "sono arrivato dido");
         }
 
 
@@ -223,25 +241,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
-    public void postMessage(View v){
-        EditText msg = (EditText) findViewById(R.id.input);
-        String text = msg.getText().toString();
-        //Log.i("TAAAAAAAAAAAAG", "ciao dido");
-        if(text != null && !text.equals("")) {
-            // Read the input field and push a new instance
-            // of ChatMessage to the Firebase database
-            FirebaseDatabase.getInstance()
-                    .getReference().child("chats")
-                    .push()                                             //getReference("Clients")
-                    .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
-            msg.setText("");
-            Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-            Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        } else {
-            Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
-        }
 
-    }
 
 
 }
