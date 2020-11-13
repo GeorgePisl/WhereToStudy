@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 
+import android.graphics.Color;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.List;
+import java.util.Random;
+
 import android.os.Bundle;
 
 public class ChatActivity extends AppCompatActivity {
@@ -52,109 +55,149 @@ public class ChatActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.nav_activity_chat);
+    public void postMessage(View v) {
+        EditText msg = (EditText) findViewById(R.id.input);
+        String text = msg.getText().toString();
+        //Log.i("TAAAAAAAAAAAAG", "ciao dido");
+        if (text != null && !text.equals("")) {
+            // Read the input field and push a new instance
+            // of ChatMessage to the Firebase database
+            FirebaseDatabase.getInstance()
+                    .getReference().child("chats")
+                    .push()                                             //getReference("Clients")
+                    .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+            msg.setText("");
+            //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        } else {
+            Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
+        }
 
-            mAuth = FirebaseAuth.getInstance();
-            //part for navigation drawer
-            NavigationView navigationView = findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                                                                 @Override
-                                                                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                                                                     if(item.getItemId() == R.id.nav_home){
-                                                                         Intent myIntent = new Intent(ChatActivity.this, MapActivity.class);
-                                                                         ChatActivity.this.startActivity(myIntent);
+    }
 
-                                                                     }
-                                                                     else if (item.getItemId() == R.id.nav_test){
-                                                                     }
-                                                                     else if (item.getItemId() == R.id.nav_logout){
-                                                                         mAuth.signOut();
-                                                                         FacebookSdk.sdkInitialize(getApplicationContext());
-                                                                         LoginManager.getInstance().logOut();
-                                                                         AccessToken.setCurrentAccessToken(null);
-                                                                         finish();
-                                                                         startActivity(new Intent(ChatActivity.this, Login.class));
-                                                                         if (authStateListener != null) {
-                                                                             mAuth.removeAuthStateListener(authStateListener);
-                                                                         }
-                                                                     }
-                                                                     DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-                                                                     drawerLayout.closeDrawer(GravityCompat.START);
-                                                                     return true;
-                                                                 }
-            });
-            // User is already signed in. Therefore, display
-            // a welcome Toast
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.nav_activity_chat);
 
+        mAuth = FirebaseAuth.getInstance();
+        //part for navigation drawer
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.nav_home) {
+                    Intent myIntent = new Intent(ChatActivity.this, MapActivity.class);
+                    ChatActivity.this.startActivity(myIntent);
 
-            //Log.i("TAAAAAAAAAAAAG", "sono arrivato quddddddi");
-            ListView messageList = (ListView) findViewById(R.id.messagesList);
-            messageList.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-            messageList.setStackFromBottom(true);
-
-
-            //adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message_layout,
-            //     FirebaseDatabase.getInstance().getReference()) {
+                } else if (item.getItemId() == R.id.nav_test) {
+                } else if (item.getItemId() == R.id.nav_logout) {
+                    mAuth.signOut();
+                    FacebookSdk.sdkInitialize(getApplicationContext());
+                    LoginManager.getInstance().logOut();
+                    AccessToken.setCurrentAccessToken(null);
+                    finish();
+                    startActivity(new Intent(ChatActivity.this, Login.class));
+                    if (authStateListener != null) {
+                        mAuth.removeAuthStateListener(authStateListener);
+                    }
+                }
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+        // User is already signed in. Therefore, display
+        // a welcome Toast
 
 
-            Query query = FirebaseDatabase.getInstance().getReference().child("chats");
-            //DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-            //database.keepSynced(true);
-            Log.i("TAAAAAAAAAAAAG", "sono arrivato qui");
+        //Log.i("TAAAAAAAAAAAAG", "sono arrivato quddddddi");
+        ListView messageList = (ListView) findViewById(R.id.messagesList);
+        messageList.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        messageList.setStackFromBottom(true);
+
+
+        //adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.message_layout,
+        //     FirebaseDatabase.getInstance().getReference()) {
+
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("chats");
+        //DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        //database.keepSynced(true);
+        Log.i("TAAAAAAAAAAAAG", "sono arrivato qui");
 //The error said the constructor expected FirebaseListOptions - here you create them:
-            FirebaseListOptions<ChatMessage> options = new FirebaseListOptions.Builder<ChatMessage>()
-                    .setQuery(query, ChatMessage.class)
-                    .setLayout(R.layout.message_layout)
-                    .build();
+        FirebaseListOptions<ChatMessage> options = new FirebaseListOptions.Builder<ChatMessage>()
+                .setQuery(query, ChatMessage.class)
+                .setLayout(R.layout.message_layout)
+                .build();
 
 
+        //Finally you pass them to the constructor here:
+        adapter = new FirebaseListAdapter<ChatMessage>(options) {
 
 
-            //Finally you pass them to the constructor here:
-            adapter = new FirebaseListAdapter<ChatMessage>(options){
+            @Override
+            protected void populateView(View v, ChatMessage model, int position) {
+                //Log.i("MESSAGGIO", "prova di nuovo");
+                //get the views
 
 
-                @Override
-                protected void populateView(View v, ChatMessage model, int position) {
-                    Log.i("MESSAGGIO", "prova di nuovo");
-                    //get the views
-                    RelativeLayout messageLayout = (RelativeLayout) v.findViewById(R.id.message_bubble_layout);
-                    RelativeLayout messageLayoutParent = (RelativeLayout) v.findViewById(R.id.message_bubble_layout_parent);
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) messageLayout.getLayoutParams();
+                TextView messageUtente = (TextView) v.findViewById(R.id.message_user);
+                TextView messageText = (TextView) v.findViewById(R.id.message_text);
+                TextView messageTime = (TextView) v.findViewById(R.id.message_time);
+                TextView messageUser = (TextView) v.findViewById(R.id.message_user);
 
-                    TextView messageText = (TextView) v.findViewById(R.id.message_text);
-                    TextView messageTime = (TextView) v.findViewById(R.id.message_time);
-                    TextView messageUser = (TextView) v.findViewById(R.id.message_user);
+                RelativeLayout messageLayout = (RelativeLayout) v.findViewById(R.id.message_bubble_layout);
+                //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) messageLayout.getLayoutParams();
 
-                    if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
-                    messageLayout.setBackgroundResource(R.drawable.bubble2);
+                if (model.getMessageUser().equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+
+
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    //params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                     params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     messageLayout.setLayoutParams(params);
+
+                   // messageLayout.setGravity(Gravity.RIGHT);
+
+                    messageLayout.setBackgroundResource(R.drawable.bubble2);
+                    messageUtente.setTextColor(Color.RED);
+                   // params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                   // messageLayout.setLayoutParams(params);
 
                 }
                 // If not my message then align to left
                 else {
-                    messageLayout.setBackgroundResource(R.drawable.bubble1);
+                    Random rnd = new Random();
+                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                    messageUtente.setTextColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+
+
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    //params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                     params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                     messageLayout.setLayoutParams(params);
-                }
 
 
-                    messageText.setText(model.getMessageText());
-                    messageUser.setText(model.getMessageUser());
-                    messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
-                    Log.i("MESSAGGIO", model.getMessageText());
-
+                    //messageLayout.setGravity(Gravity.LEFT);
+                    messageLayout.setBackgroundResource(R.drawable.bubble1);
+                    //params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    //messageLayout.setLayoutParams(params);
 
                 }
-            };
 
-            messageList.setAdapter(adapter);
-            Log.i("TAAAAAAAAAAAAG", "sono arrivato dido");
-        }
+                messageText.setText(model.getMessageText());
+                messageUser.setText(model.getMessageUser());
+                messageTime.setText("21.13");
+                //Log.i("MESSAGGIO", model.getMessageText());
+
+
+            }
+        };
+
+        messageList.setAdapter(adapter);
+        //Log.i("TAAAAAAAAAAAAG", "sono arrivato dido");
+    }
 
 
 /*
@@ -220,28 +263,6 @@ public class ChatActivity extends AppCompatActivity {
             return true;
         }
     */
-
-
-
-    public void postMessage(View v){
-        EditText msg = (EditText) findViewById(R.id.input);
-        String text = msg.getText().toString();
-        //Log.i("TAAAAAAAAAAAAG", "ciao dido");
-        if(text != null && !text.equals("")) {
-            // Read the input field and push a new instance
-            // of ChatMessage to the Firebase database
-            FirebaseDatabase.getInstance()
-                    .getReference().child("chats")
-                    .push()                                             //getReference("Clients")
-                    .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
-            msg.setText("");
-            Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-            Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        } else {
-            Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
-        }
-
-    }
 
 
 }
