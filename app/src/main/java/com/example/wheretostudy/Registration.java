@@ -40,8 +40,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -205,11 +209,32 @@ public class Registration extends AppCompatActivity {
                     return;
                 }
                 else {
-                    if (validate()) {
-                        //upload data to database
-                        checkEmail(v);
+                    Query usernameQuery = FirebaseDatabase.getInstance().getReference().child("Clients").orderByChild("username").equalTo(eUsername.getText().toString());
+                    usernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            boolean exists;
+                            if (snapshot.getChildrenCount() > 0) {
+                                //Toast.makeText(Registration.this, "This username already exists.", Toast.LENGTH_LONG).show();
+                                exists = true;
+                            }
+                            else {
+                            exists = false;
+                            }
 
-                    }
+                            if(validate(exists)) {
+                            //upload data to database
+                            checkEmail(v);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+
 
 
                 }
@@ -217,10 +242,8 @@ public class Registration extends AppCompatActivity {
             }
 
 
-            public boolean validate() {
+            public boolean validate(boolean exist) {
                 boolean result = true;
-
-
                 if (TextUtils.isEmpty(eEmail.getText())) {
 
                     eEmail.setError("Email is required!");
@@ -252,6 +275,12 @@ public class Registration extends AppCompatActivity {
                     Toast.makeText(Registration.this, "Your passwords do not match!", Toast.LENGTH_LONG).show();
                     result = false;
                 }
+
+                if (exist==true){
+                    Toast.makeText(Registration.this, "Please use a different username.", Toast.LENGTH_LONG).show();
+                    result = false;
+                }
+
 
                 return result;
             }
