@@ -78,7 +78,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -286,6 +288,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //part for navigation drawer
         NavigationView navigationView = findViewById(R.id.nav_view);
+        //update username, email and profile picture in header
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUser = headerView.findViewById(R.id.profileUsername);
+        navUser.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        TextView navEmail = headerView.findViewById(R.id.profileEmail);
+        navEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

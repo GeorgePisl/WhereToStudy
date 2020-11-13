@@ -2,6 +2,7 @@ package com.example.wheretostudy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -50,6 +51,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.UUID;
 
 
@@ -163,8 +167,10 @@ public class Registration extends AppCompatActivity {
                     imageUri = data.getData();
                     profilePic.setImageURI(imageUri);
                     uploadPicture();
+
                 }
             }
+
 
             private void uploadPicture() {
 
@@ -172,8 +178,8 @@ public class Registration extends AppCompatActivity {
                 pd.setTitle("Uploading image...");
                 pd.show();
 
-                final String randomKey = UUID.randomUUID().toString();
-                StorageReference riversRef = storageReference.child("Profile Picture/" + randomKey);
+                //final String randomKey = UUID.randomUUID().toString();
+                StorageReference riversRef = storageReference.child("Profile Picture/" + eUsername);
 
                 riversRef.putFile(imageUri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

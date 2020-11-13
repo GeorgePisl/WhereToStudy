@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,10 +40,11 @@
             android:name=".MapActivity"
             android:theme="@style/Theme.WhereToStudy.NoActionBar" />
         <activity android:name=".PermissionActivity" />
-        <!-- <activity
+        <!--
+ <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.WhereToStudy.NoActionBar" /> -->
-
+            android:theme="@style/Theme.WhereToStudy.NoActionBar" />
+        -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
