@@ -197,11 +197,15 @@ public class Login extends AppCompatActivity {
             private void handleFacebookToken(AccessToken token) {
                 Log.d(TAG, "handleFacebookToken" + token);
 
+                progressDialog.setMessage("Please wait, you are being verified");
+                progressDialog.show();
+
                 AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
                 mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressDialog.dismiss();
                             Log.d(TAG, "Sign in with credential: successful");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(Login.this, "Authentication succeded", Toast.LENGTH_SHORT).show();
@@ -225,6 +229,7 @@ public class Login extends AppCompatActivity {
                             }
                         }
                         else {
+                            progressDialog.dismiss();
                             Log.d(TAG, "Sign in with credential: failed", task.getException());
                             Toast.makeText(Login.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                         }
@@ -336,11 +341,16 @@ public class Login extends AppCompatActivity {
 
 
             private void FirebaseGoogleAuth(String idToken){
+
+                progressDialog.setMessage("Please wait, you are being verified");
+                progressDialog.show();
+
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(idToken, null);
                 mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            progressDialog.dismiss();
                             Toast.makeText(Login.this, "Authentication succeded", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
@@ -362,6 +372,7 @@ public class Login extends AppCompatActivity {
                             }
                         }
                         else {
+                            progressDialog.dismiss();
                             Toast.makeText(Login.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                         }
                     }
