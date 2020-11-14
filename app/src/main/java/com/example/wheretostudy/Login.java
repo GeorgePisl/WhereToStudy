@@ -110,7 +110,6 @@ public class Login extends AppCompatActivity {
                 tvRegister.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
-
                         startActivity(new Intent(Login.this, Registration.class));
                     }
 
