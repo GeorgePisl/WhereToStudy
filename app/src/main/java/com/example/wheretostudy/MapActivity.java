@@ -364,11 +364,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             String image_rsc = snapshot.child("image").getValue().toString();
                             if (name.equals(title)) {
                                 ImageView place_photo = (ImageView) v.findViewById(R.id.place_photo);
-                                Glide.with(v.getContext())
-                                        .load(image_rsc)
-                                        .placeholder(R.drawable.progress_bar)
-                                        .centerCrop()
-                                        .into(place_photo);
                                 TextView place_name = (TextView) v.findViewById(R.id.place_name);
                                 TextView place_address = (TextView) v.findViewById(R.id.place_address);
                                 TextView place_rooms = (TextView) v.findViewById(R.id.place_rooms);
@@ -377,6 +372,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 place_address.setText(address);
                                 place_rooms.setText("Rooms: " + rooms);
                                 place_available.setText("Places Available: " + places_available);
+                                int id = v.getContext().getResources().getIdentifier("drawable/"+ image_rsc, null, v.getContext().getPackageName());
+                                place_photo.setImageResource(id);
+
 
 
                             }
