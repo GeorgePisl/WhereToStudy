@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
@@ -66,6 +68,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.os.Handler;
 import android.renderscript.ScriptGroup;
@@ -268,6 +271,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 f_database.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        View v = getLayoutInflater().inflate(R.layout.custom_info_window, null);
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             double latitude = (double) (snapshot.child("latitude").getValue());
                             double longitude = (double) (snapshot.child("longitude").getValue());
@@ -359,6 +363,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             String image_rsc = snapshot.child("image").getValue().toString();
                             if (name.equals(title)) {
                                 ImageView place_photo = (ImageView) v.findViewById(R.id.place_photo);
+                                Glide.with(v.getContext())
+                                        .load(image_rsc)
+                                        .placeholder(R.drawable.progress_bar)
+                                        .centerCrop()
+                                        .into(place_photo);
                                 TextView place_name = (TextView) v.findViewById(R.id.place_name);
                                 TextView place_address = (TextView) v.findViewById(R.id.place_address);
                                 TextView place_rooms = (TextView) v.findViewById(R.id.place_rooms);
@@ -367,7 +376,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 place_address.setText(address);
                                 place_rooms.setText("Rooms: " + rooms);
                                 place_available.setText("Places Available: " + places_available);
-                                Picasso.get().load(image_rsc).into(place_photo);
+
+
                             }
                         }
                         return v;
