@@ -39,7 +39,8 @@
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoLogIn" />
+        app:layout_constraintTop_toBottomOf="@+id/logoLogIn"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/password"
@@ -55,7 +56,8 @@
         android:inputType="textPassword"
         android:textColorHint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvForgotpsw"
@@ -67,7 +69,8 @@
         android:textColor="#FFFFFFFF"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/register"
@@ -96,7 +99,8 @@
         android:textColor="#FFFFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/visibility_on"
@@ -109,7 +113,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/password"
         app:layout_constraintStart_toEndOf="@+id/password"
         app:layout_constraintTop_toTopOf="@+id/password"
-        app:srcCompat="@drawable/ic_visibility" />
+        app:srcCompat="@drawable/ic_visibility"
+        android:contentDescription="show password"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/visibility_off"
@@ -124,7 +130,9 @@
         app:layout_constraintStart_toEndOf="@+id/password"
         app:layout_constraintTop_toTopOf="@+id/password"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_visibility_off" />
+        app:srcCompat="@drawable/ic_visibility_off"
+        android:contentDescription="hide password"
+        tools:ignore="HardcodedText" />
 
 
     <com.facebook.login.widget.LoginButton

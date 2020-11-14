@@ -1,20 +1,15 @@
 package com.example.wheretostudy;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,7 +24,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -42,15 +36,12 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,33 +51,27 @@ import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 import com.skyfishjy.library.RippleBackground;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.os.Handler;
-import android.renderscript.ScriptGroup;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,7 +89,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private MaterialSearchBar materialSearchBar;
     private View mapView;
-    private Button btnFind;
     private RippleBackground rippleBg;
 
     private final float DEFAULT_ZOOM = 18;
@@ -120,7 +104,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mAuth = FirebaseAuth.getInstance();
 
         materialSearchBar = findViewById(R.id.searchBar);
-        btnFind = findViewById(R.id.btn_find);
+        Button btnFind = findViewById(R.id.btn_find);
         rippleBg = findViewById(R.id.ripple_bg);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -270,7 +254,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
                 f_database.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                         View v = getLayoutInflater().inflate(R.layout.custom_info_window, null);
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             double latitude = (double) (snapshot.child("latitude").getValue());
@@ -282,7 +266,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NotNull DatabaseError databaseError) {
 
                     }
                 });
@@ -307,6 +291,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.nav_home) {
+                    DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                    drawerLayout.closeDrawer(GravityCompat.START);
 
                 } else if (item.getItemId() == R.id.nav_test) {
                     Intent myIntent = new Intent(MapActivity.this, TestActivity.class);
@@ -343,7 +329,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
         f_database.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                     // Use default InfoWindow frame
                     @Override
@@ -386,7 +372,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NotNull DatabaseError databaseError) {
 
             }
         });

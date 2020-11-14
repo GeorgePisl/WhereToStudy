@@ -9,15 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 
 import android.graphics.Color;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,19 +27,16 @@ import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseListAdapter;
 
 import com.firebase.ui.database.FirebaseListOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import java.util.List;
 import java.util.Random;
 
 import android.os.Bundle;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -171,11 +165,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
             @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-                //Log.i("MESSAGGIO", "prova di nuovo");
-                //get the views
-
-
+            protected void populateView(@NotNull View v, @NotNull ChatMessage model, int position) {
                 TextView messageUtente = (TextView) v.findViewById(R.id.message_user);
                 TextView messageText = (TextView) v.findViewById(R.id.message_text);
                 TextView messageTime = (TextView) v.findViewById(R.id.message_time);

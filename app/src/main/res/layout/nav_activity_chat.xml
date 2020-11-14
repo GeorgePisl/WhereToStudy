@@ -36,7 +36,9 @@
             app:tint="@color/white"
             app:fabSize="mini"
             android:onClick="postMessage"
-            android:src="@layout/ic_send_button_24dp"/>
+            android:src="@layout/ic_send_button_24dp"
+            android:contentDescription="send chat"
+            tools:ignore="HardcodedText,RelativeOverlap" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -55,7 +57,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:paddingRight="40dp"/>
+                android:paddingRight="40dp"
+                tools:ignore="HardcodedText" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

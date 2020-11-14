@@ -3,10 +3,8 @@ package com.example.wheretostudy;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Notification;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,18 +27,12 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.credentials.IdToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -65,7 +57,7 @@ public class Login extends AppCompatActivity {
     LoginButton loginFacebook;
     SignInButton loginGoogle;
     GoogleSignInClient mGoogle;
-    int RC_SIGN_IN = 1;
+    final int RC_SIGN_IN = 1;
     AccessTokenTracker accessTokenTracker;
     private CallbackManager mCallBackManager;
     private ProgressDialog progressDialog;

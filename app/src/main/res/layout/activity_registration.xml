@@ -27,7 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/description"
@@ -38,7 +39,8 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registrationText" />
+        app:layout_constraintTop_toBottomOf="@+id/registrationText"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/profilePicture"
@@ -55,7 +57,9 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_photo" />
+        app:srcCompat="@drawable/ic_add_photo"
+        android:contentDescription="profile"
+        tools:ignore="HardcodedText" />
 
 
     <TextView
@@ -66,7 +70,8 @@
         android:text="Username"
         android:textColor="@color/purple_200"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicture"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextUsername"
@@ -93,7 +98,8 @@
         android:text="Email"
         android:textColor="@color/purple_200"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsername"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/emailRegister"
@@ -121,7 +127,8 @@
         android:text="Password"
         android:textColor="@color/purple_200"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/emailRegister"
+        tools:ignore="HardcodedText" />
 
 
     <EditText
@@ -149,7 +156,8 @@
         android:text="Password"
         android:textColor="@color/purple_200"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
+        tools:ignore="HardcodedText" />
 
 
     <EditText
@@ -178,7 +186,9 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/passwordRegister"
                 app:layout_constraintTop_toBottomOf="@+id/emailRegister"
-                app:srcCompat="@drawable/ic_visibility" />
+                app:srcCompat="@drawable/ic_visibility"
+                android:contentDescription="show password"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/visibility_off"
@@ -193,7 +203,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/passwordRegister"
         app:layout_constraintTop_toBottomOf="@+id/emailRegister"
-        app:srcCompat="@drawable/ic_visibility_off" />
+        app:srcCompat="@drawable/ic_visibility_off"
+        android:contentDescription="hide password"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/visibility_on_confirm"
@@ -207,7 +219,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
         app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
-        app:srcCompat="@drawable/ic_visibility" />
+        app:srcCompat="@drawable/ic_visibility"
+        android:contentDescription="visibility"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/visibility_off_confirm"
@@ -222,7 +236,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
         app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
-        app:srcCompat="@drawable/ic_visibility_off" />
+        app:srcCompat="@drawable/ic_visibility_off"
+        android:contentDescription="visibility off"
+        tools:ignore="HardcodedText" />
 
 
     <Button
@@ -237,7 +253,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister"
+        tools:ignore="HardcodedText" />
 
 
 
@@ -252,6 +269,7 @@
         app:layout_constraintEnd_toStartOf="@+id/toolbar1"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/toolbar1"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,8 +24,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 public class PermissionActivity extends AppCompatActivity {
 
-    private Button btnGrant;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +35,7 @@ public class PermissionActivity extends AppCompatActivity {
             return;
         }
 
-        btnGrant = findViewById(R.id.btn_grant);
+        Button btnGrant = findViewById(R.id.btn_grant);
 
         btnGrant.setOnClickListener(new View.OnClickListener() {
             @Override

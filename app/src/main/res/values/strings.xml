@@ -28,6 +28,11 @@
     <string name="Registration">
         Not registered yet? <b><u>REGISTER HERE</u> </b>.
     </string>
+    <string name="name">name</string>
+    <string name="address">address</string>
+    <string name="rooms">rooms</string>
+    <string name="places_available">places available</string>
+    <string name="photo_of_the_place">Photo of the place</string>
 
 
 </resources>
