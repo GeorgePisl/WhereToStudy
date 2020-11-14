@@ -338,6 +338,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
 
                     // Defines the contents of the InfoWindow
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public View getInfoContents(Marker arg0) {
                         View v = getLayoutInflater().inflate(R.layout.custom_info_window, null);
