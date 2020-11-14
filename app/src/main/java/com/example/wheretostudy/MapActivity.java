@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,6 +60,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 import com.skyfishjy.library.RippleBackground;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -64,6 +68,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.os.Handler;
 import android.renderscript.ScriptGroup;
@@ -147,8 +152,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     //opening or closing a navigation drawer
                     DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                     drawerLayout.openDrawer(Gravity.LEFT);
-                }
-                else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     materialSearchBar.clearSuggestions();
                     materialSearchBar.closeSearch();
                 }
@@ -267,11 +271,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 f_database.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        View v = getLayoutInflater().inflate(R.layout.custom_info_window, null);
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             double latitude = (double) (snapshot.child("latitude").getValue());
                             double longitude = (double) (snapshot.child("longitude").getValue());
-                            String name=snapshot.child("name").getValue().toString();
-                            LatLng location  = new LatLng(latitude, longitude);
+                            String name = snapshot.child("name").getValue().toString();
+                            LatLng location = new LatLng(latitude, longitude);
                             mMap.addMarker(new MarkerOptions().position(location).title(name));
                         }
                     }
@@ -301,31 +306,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-               if(item.getItemId() == R.id.nav_home){
+                if (item.getItemId() == R.id.nav_home) {
 
-               }
-               else if (item.getItemId() == R.id.nav_test){
+                } else if (item.getItemId() == R.id.nav_test) {
                     Intent myIntent = new Intent(MapActivity.this, TestActivity.class);
                     MapActivity.this.startActivity(myIntent);
+                } else if (item.getItemId() == R.id.nav_chat) {
+                    Intent myIntent = new Intent(MapActivity.this, ChatActivity.class);
+                    MapActivity.this.startActivity(myIntent);
+                } else if (item.getItemId() == R.id.nav_logout) {
+                    mAuth.signOut();
+                    FacebookSdk.sdkInitialize(getApplicationContext());
+                    LoginManager.getInstance().logOut();
+                    AccessToken.setCurrentAccessToken(null);
+                    finish();
+                    startActivity(new Intent(MapActivity.this, Login.class));
+                    if (authStateListener != null) {
+                        mAuth.removeAuthStateListener(authStateListener);
+                    }
                 }
-               else if (item.getItemId() == R.id.nav_chat){
-                   Intent myIntent = new Intent(MapActivity.this, ChatActivity.class);
-                   MapActivity.this.startActivity(myIntent);
-               }
-               else if (item.getItemId() == R.id.nav_logout){
-                   mAuth.signOut();
-                   FacebookSdk.sdkInitialize(getApplicationContext());
-                   LoginManager.getInstance().logOut();
-                   AccessToken.setCurrentAccessToken(null);
-                   finish();
-                   startActivity(new Intent(MapActivity.this, Login.class));
-                   if (authStateListener != null) {
-                       mAuth.removeAuthStateListener(authStateListener);
-                   }
-               }
-               DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-               drawerLayout.closeDrawer(GravityCompat.START);
-               return true;
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
 
@@ -336,6 +338,60 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+
+        DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
+        f_database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                    // Use default InfoWindow frame
+                    @Override
+                    public View getInfoWindow(Marker arg0) {
+                        return null;
+                    }
+
+                    // Defines the contents of the InfoWindow
+                    @Override
+                    public View getInfoContents(Marker arg0) {
+                        View v = getLayoutInflater().inflate(R.layout.custom_info_window, null);
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String name = snapshot.child("name").getValue().toString();
+                            String title = arg0.getTitle();
+                            String address = snapshot.child("address").getValue().toString();
+                            String rooms = snapshot.child("rooms").getValue().toString();
+                            String places_available = snapshot.child("places_available").getValue().toString();
+                            String image_rsc = snapshot.child("image").getValue().toString();
+                            if (name.equals(title)) {
+                                ImageView place_photo = (ImageView) v.findViewById(R.id.place_photo);
+                                Glide.with(v.getContext())
+                                        .load(image_rsc)
+                                        .placeholder(R.drawable.progress_bar)
+                                        .centerCrop()
+                                        .into(place_photo);
+                                TextView place_name = (TextView) v.findViewById(R.id.place_name);
+                                TextView place_address = (TextView) v.findViewById(R.id.place_address);
+                                TextView place_rooms = (TextView) v.findViewById(R.id.place_rooms);
+                                TextView place_available = (TextView) v.findViewById(R.id.place_available);
+                                place_name.setText(name);
+                                place_address.setText(address);
+                                place_rooms.setText("Rooms: " + rooms);
+                                place_available.setText("Places Available: " + places_available);
+
+
+                            }
+                        }
+                        return v;
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         try {
@@ -354,10 +410,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
 
-
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
         if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
             View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("1"));
