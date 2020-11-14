@@ -2,6 +2,7 @@ package com.example.wheretostudy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -76,31 +77,53 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_activity_chat);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ImageView menu = toolbar.findViewById(R.id.lateralMenu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+
+
         mAuth = FirebaseAuth.getInstance();
         //part for navigation drawer
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(1).setChecked(true);
         //update username, email and profile picture in header
         View headerView = navigationView.getHeaderView(0);
         TextView navUser = headerView.findViewById(R.id.profileUsername);
         navUser.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         TextView navEmail = headerView.findViewById(R.id.profileEmail);
         navEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
+        //ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.nav_home) {
+                    item.setChecked(false);
                     Intent myIntent = new Intent(ChatActivity.this, MapActivity.class);
                     ChatActivity.this.startActivity(myIntent);
 
+
                 } else if (item.getItemId() == R.id.nav_test) {
+                    item.setChecked(false);
+                    Intent myIntent = new Intent(ChatActivity.this, TestActivity.class);
+                    ChatActivity.this.startActivity(myIntent);
+
                 } else if (item.getItemId() == R.id.nav_logout) {
+                    item.setChecked(false);
                     mAuth.signOut();
                     FacebookSdk.sdkInitialize(getApplicationContext());
                     LoginManager.getInstance().logOut();
@@ -114,6 +137,8 @@ public class ChatActivity extends AppCompatActivity {
                 DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
+
+
             }
         });
         // User is already signed in. Therefore, display

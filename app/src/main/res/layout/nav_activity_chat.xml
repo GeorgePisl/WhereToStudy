@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar_chat">
+    </include>
+
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +26,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         tools:context="com.example.wheretostudy.ChatActivity">
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -54,18 +62,18 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
+            android:layout_height="638dp"
             android:layout_alignParentLeft="true"
             android:id="@+id/messagesList"
             android:layout_marginBottom="16dp"
             android:layout_above="@+id/fab"
             android:divider="@android:color/transparent"
             android:dividerHeight="16dp">
+
         </ListView>
 
     </RelativeLayout>
+
 
 
     <com.google.android.material.navigation.NavigationView

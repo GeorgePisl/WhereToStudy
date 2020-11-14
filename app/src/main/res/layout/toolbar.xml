@@ -15,18 +15,34 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/background_wts"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+            <ImageView
+                android:id="@+id/lateralMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:padding="1dp"
+                android:src="@drawable/ic_menu" />
+
+            <TextView
+                android:id="@+id/nametoolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_marginRight="10dp"
-                android:scaleType="fitStart"
                 android:padding="1dp"
+                android:scaleType="fitEnd"
                 android:src="@drawable/logo_wts" />
         </androidx.appcompat.widget.Toolbar>
 
