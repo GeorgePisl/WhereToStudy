@@ -58,6 +58,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 import com.skyfishjy.library.RippleBackground;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -355,6 +356,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             String address = snapshot.child("address").getValue().toString();
                             String rooms = snapshot.child("rooms").getValue().toString();
                             String places_available = snapshot.child("places_available").getValue().toString();
+                            String image_rsc = snapshot.child("image").getValue().toString();
                             if (name.equals(title)) {
                                 ImageView place_photo = (ImageView) v.findViewById(R.id.place_photo);
                                 TextView place_name = (TextView) v.findViewById(R.id.place_name);
@@ -364,7 +366,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 place_name.setText(name);
                                 place_address.setText(address);
                                 place_rooms.setText("Rooms: " + rooms);
-                                place_available.setText("Places Available: " + rooms);
+                                place_available.setText("Places Available: " + places_available);
+                                Picasso.get().load(image_rsc).into(place_photo);
                             }
                         }
                         return v;

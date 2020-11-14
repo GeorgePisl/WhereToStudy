@@ -1,43 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#FFFFFF" >
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/place_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="142dp"
+        android:layout_height="127dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521" />
 
     <TextView
         android:id="@+id/place_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginStart="16dp"
+        android:text="name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/place_photo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.10" />
 
     <TextView
         android:id="@+id/place_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginStart="16dp"
+        android:text="address"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/place_photo"
+        app:layout_constraintTop_toBottomOf="@+id/place_name"
+        app:layout_constraintVertical_bias="0.10" />
 
     <TextView
         android:id="@+id/place_rooms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginStart="16dp"
+        android:text="rooms"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/place_photo"
+        app:layout_constraintTop_toBottomOf="@+id/place_address"
+        app:layout_constraintVertical_bias="0.10" />
 
     <TextView
         android:id="@+id/place_available"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginStart="16dp"
+        android:text="places available"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/place_photo"
+        app:layout_constraintTop_toBottomOf="@+id/place_rooms"
+        app:layout_constraintVertical_bias="0.10" />
 
     <TextView
         android:id="@+id/see_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/see_details" />
+        android:layout_marginStart="16dp"
+        android:text="@string/see_details"
+        android:textColor="@color/purple_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/place_photo"
+        app:layout_constraintTop_toBottomOf="@+id/place_available"
+        app:layout_constraintVertical_bias="0.10" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
