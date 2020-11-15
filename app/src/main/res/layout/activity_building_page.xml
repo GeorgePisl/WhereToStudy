@@ -35,13 +35,9 @@
             android:id="@+id/list_classroom"
             android:layout_width="392dp"
             android:layout_height="442dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/planimetry_photo"
-            app:layout_constraintVertical_bias="0.562"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/planimetry_photo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
