@@ -12,35 +12,43 @@
         android:id="@+id/toolbar_chat"
         layout="@layout/toolbar"></include>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".BuildingActivity">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="60dp">
 
-        <ImageView
-            android:id="@+id/planimetry_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="204dp"
-            android:contentDescription="@string/planimetry"
-            android:scaleType="fitXY"
-            android:src="@drawable/planimetry_scarpa"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:context=".BuildingActivity">
 
-        <ListView
-            android:id="@+id/list_classroom"
-            android:layout_width="392dp"
-            android:layout_height="442dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/planimetry_photo" />
+            <ImageView
+                android:id="@+id/planimetry_photo"
+                android:layout_width="417dp"
+                android:layout_height="316dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/planimetry"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.002" />
+
+            <ListView
+                android:id="@+id/list_classroom"
+                android:layout_width="402dp"
+                android:layout_height="384dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/planimetry_photo" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

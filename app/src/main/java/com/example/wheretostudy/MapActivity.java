@@ -260,8 +260,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             double latitude = (double) (snapshot.child("latitude").getValue());
                             double longitude = (double) (snapshot.child("longitude").getValue());
                             String name = snapshot.child("name").getValue().toString();
+                            String image_rsc = snapshot.child("image").getValue().toString();
                             LatLng location = new LatLng(latitude, longitude);
-                            mMap.addMarker(new MarkerOptions().position(location).title(name));
+                            mMap.addMarker(new MarkerOptions().position(location).title(name).snippet(image_rsc));
                         }
                     }
 
@@ -365,8 +366,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 place_available.setText("Places Available: " + places_available);
                                 int id = v.getContext().getResources().getIdentifier("drawable/"+ image_rsc, null, v.getContext().getPackageName());
                                 place_photo.setImageResource(id);
-                                markerClicked=name;
-                                System.out.println("CLICKED " + markerClicked);
+
                             }
 
                         }
@@ -379,6 +379,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void onInfoWindowClick(Marker marker) {
                         Intent intent = new Intent(MapActivity.this, BuildingActivity.class);
                         intent.putExtra("building", marker.getTitle());
+                        intent.putExtra("image", marker.getSnippet());
                         startActivity(intent);
 
                     }

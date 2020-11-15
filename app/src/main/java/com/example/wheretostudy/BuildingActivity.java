@@ -1,6 +1,8 @@
 package com.example.wheretostudy;
 
 import android.content.Intent;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Gravity;
@@ -59,7 +61,8 @@ public class BuildingActivity extends AppCompatActivity {
         });
         Bundle bundle = getIntent().getExtras();
         String buildingName = bundle.getString("building");
-        //System.out.println("SCARICO I DATI " + buildingName);
+        String imageRsc = bundle.getString("image");
+        System.out.println(imageRsc);
 
         //part for navigation drawer
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -97,9 +100,10 @@ public class BuildingActivity extends AppCompatActivity {
         });
 
         ListView classroomList = (ListView) findViewById(R.id.list_classroom);
-        classroomList.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        classroomList.setStackFromBottom(true);
-
+        ImageView planimetry_photo = (ImageView) findViewById(R.id.planimetry_photo);
+        int id = this.findViewById(android.R.id.content).getContext().getResources().getIdentifier("drawable/"+ "planimetry_" + imageRsc, null, this.findViewById(android.R.id.content).getContext().getPackageName());
+        System.out.println("fashjkfhsajk" + id);
+        planimetry_photo.setImageResource(id);
         Query query = FirebaseDatabase.getInstance().getReference().child("locations").child(buildingName).child("classroom");
         System.out.println(query);
         FirebaseListOptions<Classroom> options = new FirebaseListOptions.Builder<Classroom>()
