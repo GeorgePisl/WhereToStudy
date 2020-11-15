@@ -162,8 +162,6 @@ public class ChatActivity extends AppCompatActivity {
 
         //Finally you pass them to the constructor here:
         adapter = new FirebaseListAdapter<ChatMessage>(options) {
-
-
             @Override
             protected void populateView(@NotNull View v, @NotNull ChatMessage model, int position) {
                 TextView messageUtente = (TextView) v.findViewById(R.id.message_user);

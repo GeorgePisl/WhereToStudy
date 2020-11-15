@@ -33,6 +33,9 @@
     <string name="rooms">rooms</string>
     <string name="places_available">places available</string>
     <string name="photo_of_the_place">Photo of the place</string>
+    <string name="planimetry">planimetry</string>
+    <string name="classroom_name">classroom_name</string>
+    <string name="classroom_seats">classroom_seats</string>
 
 
 </resources>

@@ -320,10 +320,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    String markerClicked="";
+
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
 
 
         DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
@@ -331,6 +334,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
                     // Use default InfoWindow frame
                     @Override
                     public View getInfoWindow(Marker arg0) {
@@ -361,12 +365,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 place_available.setText("Places Available: " + places_available);
                                 int id = v.getContext().getResources().getIdentifier("drawable/"+ image_rsc, null, v.getContext().getPackageName());
                                 place_photo.setImageResource(id);
-
-
-
+                                markerClicked=name;
+                                System.out.println("CLICKED " + markerClicked);
                             }
+
                         }
                         return v;
+                    }
+                });
+
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Intent intent = new Intent(MapActivity.this, BuildingActivity.class);
+                        intent.putExtra("building", marker.getTitle());
+                        startActivity(intent);
+
                     }
                 });
 
@@ -377,6 +391,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             }
         });
+
+
 
 
         try {
