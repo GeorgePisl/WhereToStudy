@@ -14,8 +14,6 @@
     </include>
 
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,19 +21,19 @@
             android:id="@+id/scanner_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="56.5dp"
             app:autoFocusButtonColor="@android:color/white"
             app:autoFocusButtonVisible="true"
             app:flashButtonColor="@android:color/white"
             app:flashButtonVisible="true"
-            app:frameColor="@android:color/white"
-            app:frameCornersSize="50dp"
-            app:frameCornersRadius="0dp"
-            app:frameAspectRatioWidth="1"
             app:frameAspectRatioHeight="1"
+            app:frameAspectRatioWidth="1"
+            app:frameColor="@android:color/white"
+            app:frameCornersRadius="0dp"
+            app:frameCornersSize="50dp"
             app:frameSize="0.75"
             app:frameThickness="2dp"
-            app:maskColor="#77000000"
-            android:layout_marginTop="65dp"/>
+            app:maskColor="#77000000" />
     </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
