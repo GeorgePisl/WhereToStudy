@@ -1,6 +1,7 @@
 package com.example.wheretostudy;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -79,6 +80,9 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_activity_chat);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+       drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,6 +92,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout = findViewById(R.id.drawer_layout);
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getApplicationWindowToken(),0);
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
