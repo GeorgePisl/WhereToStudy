@@ -3,7 +3,7 @@ package com.example.wheretostudy;
 public class ClientHelperClass {
 
 
-        String username, email, password;
+        String username, email, password, room;
 
 
         public ClientHelperClass() {
@@ -32,5 +32,6 @@ public class ClientHelperClass {
         public void setPassword(String password) {
             this.password = password;
         }
+
 
 }

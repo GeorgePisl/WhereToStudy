@@ -30,8 +30,12 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -56,19 +60,41 @@ public class ChatActivity extends AppCompatActivity {
         EditText msg = (EditText) findViewById(R.id.input);
         String text = msg.getText().toString();
         //Log.i("TAAAAAAAAAAAAG", "ciao dido");
-        if (text != null && !text.equals("")) {
-            // Read the input field and push a new instance
-            // of ChatMessage to the Firebase database
-            FirebaseDatabase.getInstance()
-                    .getReference().child("chats")
-                    .push()                                             //getReference("Clients")
-                    .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
-            msg.setText("");
-            //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-            //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        } else {
-            Toast.makeText(this, "Please enter something !!", Toast.LENGTH_LONG).show();
-        }
+
+        DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("Clients").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("room");
+        f_database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String roomUser = "";
+                if(dataSnapshot.getValue()!=null) {
+                    roomUser = dataSnapshot.getValue().toString();
+                }
+
+
+                if (text != null && !text.equals("")) {
+                    // Read the input field and push a new instance
+                    // of ChatMessage to the Firebase database
+                    FirebaseDatabase.getInstance()
+                            .getReference().child("chats")
+                            .push()                                             //getReference("Clients")
+                            .setValue(new ChatMessage(msg.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), roomUser));
+                    msg.setText("");
+                    //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                    //Log.i("TAAAAAAAAAAAAG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                } else {
+                    Toast.makeText(ChatActivity.this, "Please enter something !!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
     }
 
@@ -170,6 +196,7 @@ public class ChatActivity extends AppCompatActivity {
                 TextView messageTime = (TextView) v.findViewById(R.id.message_time);
                 TextView messageUser = (TextView) v.findViewById(R.id.message_user);
 
+
                 RelativeLayout messageLayout = (RelativeLayout) v.findViewById(R.id.message_bubble_layout);
                 //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) messageLayout.getLayoutParams();
 
@@ -208,9 +235,15 @@ public class ChatActivity extends AppCompatActivity {
                     //messageLayout.setLayoutParams(params);
 
                 }
+                String aula;
+                if(model.getMessageRoom().equals("")){
+                    aula="";
+                }else{
+                    aula=" - "+ model.getMessageRoom();
+                }
 
                 messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
+                messageUser.setText(model.getMessageUser()+aula);
                 messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
                 //Log.i("MESSAGGIO", model.getMessageText());
 

@@ -161,19 +161,57 @@ public class QRActivity extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if (info_classroom.get(2).equals("entrata")) {
                                             int available = Integer.parseInt(snapshot.child("available").getValue().toString());
-                                            if (available - 1 >= 0) {
-                                                snapshot.child("available").getRef().setValue(available - 1);
-                                                Toast.makeText(QRActivity.this, "SUCCESS!! YOU CAN ENTER THE CLASSROOM", Toast.LENGTH_SHORT).show();
+                                            if (available - 1 < 0) {
+                                                Toast.makeText(QRActivity.this, "I'M SORRY THERE ARE NO AVAILABLE SEATS", Toast.LENGTH_SHORT).show();
+
+
+
                                             }
                                             else{
-                                                Toast.makeText(QRActivity.this, "I'M SORRY THERE ARE NO AVAILABLE SEATS", Toast.LENGTH_SHORT).show();
+
+                                                int flag = 0;
+
+                                                for (DataSnapshot s : snapshot.child("studenti").getChildren()){
+                                                    Log.i("UTENTE", s.getKey());
+                                                    Log.i("STUDENTE", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                                                    if((s.getKey()).equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())){
+                                                        Log.i("MESSAGGIO", "SONO QUI");
+
+                                                        Toast.makeText(QRActivity.this, "I'M SORRY, SEEMS YOU ARE ALREADY HERE", Toast.LENGTH_SHORT).show();
+                                                        flag=1;
+                                                        break;
+                                                    }
+                                                }
+                                                if(flag==0) {
+                                                    snapshot.child("available").getRef().setValue(available - 1);
+                                                    Toast.makeText(QRActivity.this, "SUCCESS!! YOU CAN ENTER THE CLASSROOM", Toast.LENGTH_SHORT).show();
+                                                    snapshot.child("studenti").getRef().child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).setValue(1);
+                                                    //Log.i("NUOVO", FirebaseDatabase.getInstance().getReference().child("Clients").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).getKey());
+                                                    FirebaseDatabase.getInstance().getReference().child("Clients").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("room").setValue(snapshot.child("name").getValue());
+                                                }
+
                                             }
                                         } else {
                                             int capacity = Integer.parseInt(snapshot.child("capacity").getValue().toString());
                                             int available = Integer.parseInt(snapshot.child("available").getValue().toString());
                                             if(available + 1 <= capacity){
+                                                int flag = 0;
                                                 snapshot.child("available").getRef().setValue(available + 1);
-                                                Toast.makeText(QRActivity.this, "SUCCESS!! YOU FREED A SEAT", Toast.LENGTH_SHORT).show();
+                                                for (DataSnapshot s : snapshot.child("studenti").getChildren()){
+                                                    Log.i("UTENTE", s.getKey());
+                                                    Log.i("STUDENTE", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                                                    if((s.getKey()).equals(FirebaseAuth.getInstance().getCurrentUser().getDisplayName())) {
+                                                        Toast.makeText(QRActivity.this, "SUCCESS!! YOU FREED A SEAT", Toast.LENGTH_SHORT).show();
+                                                        snapshot.child("studenti").getRef().child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).removeValue();
+                                                        FirebaseDatabase.getInstance().getReference().child("Clients").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("room").removeValue();
+                                                        flag=1;
+                                                        break;
+                                                        }
+                                                    }
+                                                if(flag==0){
+                                                    Toast.makeText(QRActivity.this, "OPS! SEEMS YOU DIDN'T JOIN THIS ROOM!", Toast.LENGTH_SHORT).show();
+                                                }
+
                                             }
                                             else{
                                                 Toast.makeText(QRActivity.this, "ERROR MAXIMUM CAPACITY REACHED", Toast.LENGTH_SHORT).show();

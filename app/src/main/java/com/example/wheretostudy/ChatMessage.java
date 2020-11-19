@@ -10,15 +10,16 @@ public class ChatMessage {
     private String messageText;
     private long messageTime;
     private String messageUser;
-
+    private String messageRoom;
 
     //required for FireBase
     public ChatMessage(){}
 
-    public ChatMessage(String text, String user){
+    public ChatMessage(String text, String user, String room){
         messageText = text;
         messageUser = user;
         messageTime = new Date().getTime();
+        messageRoom = room;
     }
 
     public String getMessageText() {
@@ -43,5 +44,13 @@ public class ChatMessage {
 
     public void setMessageUser(String messageUser) {
         this.messageUser = messageUser;
+    }
+
+    public String getMessageRoom() {
+        return messageRoom;
+    }
+
+    public void setMessageRoom(String messageRoom) {
+        this.messageRoom = messageRoom;
     }
 }
