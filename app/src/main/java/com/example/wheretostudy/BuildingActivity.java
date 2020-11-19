@@ -24,6 +24,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -100,7 +101,7 @@ public class BuildingActivity extends AppCompatActivity {
         });
 
         ListView classroomList = (ListView) findViewById(R.id.list_classroom);
-        ImageView planimetry_photo = (ImageView) findViewById(R.id.planimetry_photo);
+        PhotoView planimetry_photo = (PhotoView) findViewById(R.id.planimetry_photo);
         int id = this.findViewById(android.R.id.content).getContext().getResources().getIdentifier("drawable/"+ "planimetry_" + imageRsc, null, this.findViewById(android.R.id.content).getContext().getPackageName());
         System.out.println("fashjkfhsajk" + id);
         planimetry_photo.setImageResource(id);
