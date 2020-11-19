@@ -58,6 +58,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -354,9 +355,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             String title = arg0.getTitle();
                             String address = snapshot.child("address").getValue().toString();
                             String rooms = snapshot.child("rooms").getValue().toString();
-                            String places_available = snapshot.child("places_available").getValue().toString();
                             String image_rsc = snapshot.child("image").getValue().toString();
+                            int available=0;
                             if (name.equals(title)) {
+                                for (DataSnapshot s : snapshot.child("classroom").getChildren()){
+                                    available += Integer.parseInt(s.child("available").getValue().toString());
+                                }
                                 ImageView place_photo = (ImageView) v.findViewById(R.id.place_photo);
                                 TextView place_name = (TextView) v.findViewById(R.id.place_name);
                                 TextView place_address = (TextView) v.findViewById(R.id.place_address);
@@ -365,10 +369,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 place_name.setText(name);
                                 place_address.setText(address);
                                 place_rooms.setText("Rooms: " + rooms);
-                                place_available.setText("Places Available: " + places_available);
+                                place_available.setText("Places Available: " + String.valueOf(available));
                                 int id = v.getContext().getResources().getIdentifier("drawable/"+ image_rsc, null, v.getContext().getPackageName());
                                 place_photo.setImageResource(id);
-
                             }
 
                         }
