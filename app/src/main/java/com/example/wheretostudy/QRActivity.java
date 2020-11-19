@@ -19,14 +19,14 @@ import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class TestActivity extends AppCompatActivity {
+public class QRActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nav_activity_test);
+        setContentView(R.layout.nav_activity_qr);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,14 +50,14 @@ public class TestActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.nav_home){
                     item.setChecked(false);
-                    Intent myIntent = new Intent(TestActivity.this, MapActivity.class);
-                    TestActivity.this.startActivity(myIntent);
+                    Intent myIntent = new Intent(QRActivity.this, MapActivity.class);
+                    QRActivity.this.startActivity(myIntent);
 
                 }
                 else if (item.getItemId() == R.id.nav_chat){
                     item.setChecked(false);
-                    Intent myIntent = new Intent(TestActivity.this, ChatActivity.class);
-                    TestActivity.this.startActivity(myIntent);
+                    Intent myIntent = new Intent(QRActivity.this, ChatActivity.class);
+                    QRActivity.this.startActivity(myIntent);
                 }
                 else if (item.getItemId() == R.id.nav_logout){
                     item.setChecked(false);
@@ -66,7 +66,7 @@ public class TestActivity extends AppCompatActivity {
                     LoginManager.getInstance().logOut();
                     AccessToken.setCurrentAccessToken(null);
                     finish();
-                    startActivity(new Intent(TestActivity.this, Login.class));
+                    startActivity(new Intent(QRActivity.this, Login.class));
                     if (authStateListener != null) {
                         mAuth.removeAuthStateListener(authStateListener);
                     }

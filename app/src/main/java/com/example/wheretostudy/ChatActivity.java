@@ -111,9 +111,9 @@ public class ChatActivity extends AppCompatActivity {
                     ChatActivity.this.startActivity(myIntent);
 
 
-                } else if (item.getItemId() == R.id.nav_test) {
+                } else if (item.getItemId() == R.id.nav_qr) {
                     item.setChecked(false);
-                    Intent myIntent = new Intent(ChatActivity.this, TestActivity.class);
+                    Intent myIntent = new Intent(ChatActivity.this, QRActivity.class);
                     ChatActivity.this.startActivity(myIntent);
 
                 } else if (item.getItemId() == R.id.nav_logout) {

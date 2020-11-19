@@ -295,8 +295,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                     drawerLayout.closeDrawer(GravityCompat.START);
 
-                } else if (item.getItemId() == R.id.nav_test) {
-                    Intent myIntent = new Intent(MapActivity.this, TestActivity.class);
+                } else if (item.getItemId() == R.id.nav_qr) {
+                    Intent myIntent = new Intent(MapActivity.this, QRActivity.class);
                     MapActivity.this.startActivity(myIntent);
                 } else if (item.getItemId() == R.id.nav_chat) {
                     Intent myIntent = new Intent(MapActivity.this, ChatActivity.class);

@@ -36,6 +36,8 @@
     <string name="planimetry">planimetry</string>
     <string name="classroom_name">classroom_name</string>
     <string name="classroom_seats">classroom_seats</string>
+    <string name="menu_qr">QR Scanner</string>
+    <string name="logout">Log Out</string>
 
 
 </resources>
