@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/procede"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:gravity="center_horizontal"
+        android:text="Are you sure you want to free a seat?"
+        android:textColor="@color/purple_200"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/btn_Cancel"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editableText"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="35dp"
+        android:gravity="start"
+        android:paddingLeft="0dp"
+        android:text="Cancel"
+        android:textColor="@color/purple_200"
+        android:textSize="18dp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/btn_Ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editableText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="35dp"
+        android:gravity="end"
+        android:paddingRight="0dp"
+        android:text="Ok"
+        android:textColor="@color/purple_200"
+        android:textSize="18dp"
+        tools:ignore="HardcodedText" />
+
+
+
+
+</RelativeLayout>

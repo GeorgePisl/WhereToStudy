@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.budiyev.android.codescanner.AutoFocusMode;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.budiyev.android.codescanner.ErrorCallback;
 import com.budiyev.android.codescanner.ScanMode;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -41,18 +43,6 @@ public class QRActivity extends AppCompatActivity {
     CodeScanner mCodeScanner;
     private final static int CAMERA_REQUEST_CODE = 101;
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mCodeScanner.startPreview();
-    }
-
-    @Override
-    protected void onPause() {
-        mCodeScanner.releaseResources();
-        super.onPause();
-    }
 
     private void requestPermission() {
         ActivityCompat.requestPermissions(this,
@@ -75,9 +65,7 @@ public class QRActivity extends AppCompatActivity {
         switch (requestCode) {
             case CAMERA_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-
-                    // main logic
+                    //Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -108,89 +96,107 @@ public class QRActivity extends AppCompatActivity {
                 .show();
     }
 
+    public void codeScanner(){
+        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+        mCodeScanner = new CodeScanner(this, scannerView);
+        mCodeScanner.setCamera(CodeScanner.CAMERA_BACK);
+        mCodeScanner.setFormats(CodeScanner.ALL_FORMATS);
+        mCodeScanner.setAutoFocusMode(AutoFocusMode.SAFE);
+        mCodeScanner.setScanMode(ScanMode.CONTINUOUS);
+        mCodeScanner.setAutoFocusEnabled(true);
+        mCodeScanner.setFlashEnabled(false);
+
+        mCodeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull com.google.zxing.Result result) {
+                QRActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(QRActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        mCodeScanner.setErrorCallback(new ErrorCallback() {
+            @Override
+            public void onError(@NonNull Exception error) {
+                QRActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("QR-ACTIVITY", "Camera initialization error: " + error.getMessage());
+                    }
+                });
+            }
+        });
+
+        scannerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCodeScanner.startPreview();
+            }
+        });
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_activity_qr);
-        if (checkPermission()) {
-            CodeScannerView scannerView = findViewById(R.id.scanner_view);
-            mCodeScanner = new CodeScanner(this, scannerView);
-            mCodeScanner.setCamera(CodeScanner.CAMERA_BACK);
-            mCodeScanner.setFormats(CodeScanner.ALL_FORMATS);
-            mCodeScanner.setAutoFocusMode(AutoFocusMode.SAFE);
-            mCodeScanner.setScanMode(ScanMode.CONTINUOUS);
-            mCodeScanner.setAutoFocusEnabled(true);
-            mCodeScanner.setFlashEnabled(false);
 
-            mCodeScanner.setDecodeCallback(new DecodeCallback() {
-                @Override
-                public void onDecoded(@NonNull com.google.zxing.Result result) {
-                    QRActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(QRActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-            scannerView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCodeScanner.startPreview();
-                }
-            });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        ImageView menu = toolbar.findViewById(R.id.lateralMenu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+        mAuth = FirebaseAuth.getInstance();
 
-            ImageView menu = toolbar.findViewById(R.id.lateralMenu);
-            menu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-                    drawerLayout.openDrawer(Gravity.LEFT);
-                }
-            });
+        //part for navigation drawer
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(2).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.nav_home) {
+                    item.setChecked(false);
+                    Intent myIntent = new Intent(QRActivity.this, MapActivity.class);
+                    QRActivity.this.startActivity(myIntent);
 
-            mAuth = FirebaseAuth.getInstance();
-
-            //part for navigation drawer
-            NavigationView navigationView = findViewById(R.id.nav_view);
-            navigationView.getMenu().getItem(2).setChecked(true);
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if (item.getItemId() == R.id.nav_home) {
-                        item.setChecked(false);
-                        Intent myIntent = new Intent(QRActivity.this, MapActivity.class);
-                        QRActivity.this.startActivity(myIntent);
-
-                    } else if (item.getItemId() == R.id.nav_chat) {
-                        item.setChecked(false);
-                        Intent myIntent = new Intent(QRActivity.this, ChatActivity.class);
-                        QRActivity.this.startActivity(myIntent);
-                    } else if (item.getItemId() == R.id.nav_logout) {
-                        item.setChecked(false);
-                        mAuth.signOut();
-                        FacebookSdk.sdkInitialize(getApplicationContext());
-                        LoginManager.getInstance().logOut();
-                        AccessToken.setCurrentAccessToken(null);
-                        finish();
-                        startActivity(new Intent(QRActivity.this, Login.class));
-                        if (authStateListener != null) {
-                            mAuth.removeAuthStateListener(authStateListener);
-                        }
+                } else if (item.getItemId() == R.id.nav_chat) {
+                    item.setChecked(false);
+                    Intent myIntent = new Intent(QRActivity.this, ChatActivity.class);
+                    QRActivity.this.startActivity(myIntent);
+                } else if (item.getItemId() == R.id.nav_logout) {
+                    item.setChecked(false);
+                    mAuth.signOut();
+                    FacebookSdk.sdkInitialize(getApplicationContext());
+                    LoginManager.getInstance().logOut();
+                    AccessToken.setCurrentAccessToken(null);
+                    finish();
+                    startActivity(new Intent(QRActivity.this, Login.class));
+                    if (authStateListener != null) {
+                        mAuth.removeAuthStateListener(authStateListener);
                     }
-                    DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    return true;
                 }
-            });
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+        if (checkPermission()) {
+            codeScanner();
         } else {
             requestPermission();
+            codeScanner();
+
         }
     }
-
-
 }

@@ -298,6 +298,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 } else if (item.getItemId() == R.id.nav_qr) {
                     Intent myIntent = new Intent(MapActivity.this, QRActivity.class);
                     MapActivity.this.startActivity(myIntent);
+
+
                 } else if (item.getItemId() == R.id.nav_chat) {
                     Intent myIntent = new Intent(MapActivity.this, ChatActivity.class);
                     MapActivity.this.startActivity(myIntent);
