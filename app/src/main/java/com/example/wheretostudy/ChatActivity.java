@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 
 import android.graphics.Color;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -210,7 +211,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
-                messageTime.setText("21.13");
+                messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
                 //Log.i("MESSAGGIO", model.getMessageText());
 
 
