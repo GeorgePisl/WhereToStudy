@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.AutoFocusMode;
@@ -34,6 +35,14 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.transform.Result;
 
@@ -96,7 +105,7 @@ public class QRActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void codeScanner(){
+    public void codeScanner() {
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setCamera(CodeScanner.CAMERA_BACK);
@@ -112,7 +121,77 @@ public class QRActivity extends AppCompatActivity {
                 QRActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(QRActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        mCodeScanner.stopPreview();
+                        String qr_result = result.getText();
+                        final List<String> info_classroom = Arrays.asList(qr_result.split("-"));
+                        System.out.println(info_classroom.toString());
+                        Toast.makeText(QRActivity.this, info_classroom.get(0) + " CLASSROOM: " + info_classroom.get(1), Toast.LENGTH_SHORT).show();
+                        View mView;
+                        if (info_classroom.contains("entrata")) {
+                            mView = getLayoutInflater().inflate(R.layout.custom_entry, null);
+
+                            //System.out.println("ENTRATA");
+                        } else {
+                            mView = getLayoutInflater().inflate(R.layout.custom_exit, null);
+                            //System.out.println("USCITA");
+                        }
+                        final AlertDialog.Builder alert = new AlertDialog.Builder(QRActivity.this);
+                        TextView cancel, ok;
+                        cancel = (TextView) mView.findViewById(R.id.btn_Cancel);
+                        ok = (TextView) mView.findViewById(R.id.btn_Ok);
+                        alert.setView(mView);
+
+                        final AlertDialog alertDialog = alert.create();
+                        alertDialog.setCanceledOnTouchOutside(false);
+
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alertDialog.dismiss();
+                                mCodeScanner.startPreview();
+                            }
+                        });
+
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations").child(info_classroom.get(0)).child("classroom").child(info_classroom.get(1));
+                                f_database.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (info_classroom.get(2).equals("entrata")) {
+                                            int available = Integer.parseInt(snapshot.child("available").getValue().toString());
+                                            if (available - 1 >= 0) {
+                                                snapshot.child("available").getRef().setValue(available - 1);
+                                                Toast.makeText(QRActivity.this, "SUCCESS!! YOU CAN ENTER THE CLASSROOM", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else{
+                                                Toast.makeText(QRActivity.this, "I'M SORRY THERE ARE NO AVAILABLE SEATS", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            int capacity = Integer.parseInt(snapshot.child("capacity").getValue().toString());
+                                            int available = Integer.parseInt(snapshot.child("available").getValue().toString());
+                                            if(available + 1 <= capacity){
+                                                snapshot.child("available").getRef().setValue(available + 1);
+                                                Toast.makeText(QRActivity.this, "SUCCESS!! YOU FREED A SEAT", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else{
+                                                Toast.makeText(QRActivity.this, "ERROR MAXIMUM CAPACITY REACHED", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+                                alertDialog.dismiss();
+                                mCodeScanner.startPreview();
+
+                            }
+                        });
+                        alertDialog.show();
+
                     }
                 });
             }

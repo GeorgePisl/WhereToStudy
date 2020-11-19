@@ -14,7 +14,7 @@
         android:layout_marginTop="3dp"
         android:gravity="center_horizontal"
         android:text="Are you sure you want to free a seat?"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/black"
         android:textSize="20sp"
         tools:ignore="HardcodedText" />
 
@@ -28,7 +28,7 @@
         android:gravity="start"
         android:paddingLeft="0dp"
         android:text="Cancel"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/black"
         android:textSize="18dp"
         tools:ignore="HardcodedText" />
 
@@ -44,7 +44,7 @@
         android:gravity="end"
         android:paddingRight="0dp"
         android:text="Ok"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/purple_700"
         android:textSize="18dp"
         tools:ignore="HardcodedText" />
 
