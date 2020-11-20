@@ -105,14 +105,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.nav_activity_map);
 
         mAuth = FirebaseAuth.getInstance();
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
 
         materialSearchBar = findViewById(R.id.searchBar);
         Button btnFind = findViewById(R.id.btn_find);
         rippleBg = findViewById(R.id.ripple_bg);
 
-
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_chat, R.string.menu_chat) {
+        ActionBarDrawerToggle  actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_chat, R.string.menu_chat) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -123,7 +122,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 super.onDrawerOpened(drawerView);
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getWindowToken(), 0);
             }
 
             @Override
@@ -131,11 +130,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 super.onDrawerSlide(drawerView, slideOffset);
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getWindowToken(), 0);
             }
         };
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

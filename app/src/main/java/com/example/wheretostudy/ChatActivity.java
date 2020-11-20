@@ -97,7 +97,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
 
@@ -123,7 +122,7 @@ public class ChatActivity extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getWindowToken(), 0);
             }
 
             @Override
@@ -131,10 +130,10 @@ public class ChatActivity extends AppCompatActivity {
                 super.onDrawerSlide(drawerView, slideOffset);
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getWindowToken(), 0);
             }
         };
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
         ImageView menu = toolbar.findViewById(R.id.lateralMenu);
