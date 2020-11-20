@@ -66,7 +66,7 @@ public class ChatActivity extends AppCompatActivity {
         //Log.i("TAAAAAAAAAAAAG", "ciao dido");
 
         DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("Clients").child(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).child("room");
-        f_database.addValueEventListener(new ValueEventListener() {
+        f_database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String roomUser = "";
