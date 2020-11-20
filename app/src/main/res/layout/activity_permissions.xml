@@ -7,17 +7,22 @@
     android:padding="32dp">
 
     <LinearLayout
+        android:id="@+id/permissionBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="138dp"
+        android:layout_marginEnd="32dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
             android:contentDescription="android launcher"
+            android:src="@mipmap/ic_launcher"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -44,8 +49,10 @@
         android:id="@+id/btn_grant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/permissionBox"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
         android:layout_marginBottom="217dp"
         android:background="@color/purple_700"
         android:text="Grant Permission"
