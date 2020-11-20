@@ -277,7 +277,7 @@ public class QRActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         //part for navigation drawer
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(1).setChecked(true);
+        navigationView.getMenu().getItem(2).setChecked(true);
         //update username, email and profile picture in header
         View headerView = navigationView.getHeaderView(0);
         TextView navUser = headerView.findViewById(R.id.profileUsername);
