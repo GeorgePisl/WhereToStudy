@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Color;
@@ -69,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String roomUser = "";
-                if(dataSnapshot.getValue()!=null) {
+                if (dataSnapshot.getValue() != null) {
                     roomUser = dataSnapshot.getValue().toString();
                 }
 
@@ -97,8 +98,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
 
@@ -107,11 +106,36 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_activity_chat);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-       drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        //drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle  actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.menu_chat, R.string.menu_chat) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+        };
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         ImageView menu = toolbar.findViewById(R.id.lateralMenu);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +143,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                 drawerLayout = findViewById(R.id.drawer_layout);
-                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getApplicationWindowToken(),0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getApplicationWindowToken(), 0);
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
@@ -217,12 +241,12 @@ public class ChatActivity extends AppCompatActivity {
                     params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     messageLayout.setLayoutParams(params);
 
-                   // messageLayout.setGravity(Gravity.RIGHT);
+                    // messageLayout.setGravity(Gravity.RIGHT);
 
                     messageLayout.setBackgroundResource(R.drawable.bubble2);
                     messageUtente.setTextColor(Color.RED);
-                   // params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                   // messageLayout.setLayoutParams(params);
+                    // params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    // messageLayout.setLayoutParams(params);
 
                 }
                 // If not my message then align to left
@@ -245,14 +269,14 @@ public class ChatActivity extends AppCompatActivity {
 
                 }
                 String aula;
-                if(model.getMessageRoom().equals("")){
-                    aula="";
-                }else{
-                    aula=" - "+ model.getMessageRoom();
+                if (model.getMessageRoom().equals("")) {
+                    aula = "";
+                } else {
+                    aula = " - " + model.getMessageRoom();
                 }
 
                 messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser()+aula);
+                messageUser.setText(model.getMessageUser() + aula);
                 messageTime.setText(DateFormat.format("HH:mm A", model.getMessageTime()));
                 //Log.i("MESSAGGIO", model.getMessageText());
 
