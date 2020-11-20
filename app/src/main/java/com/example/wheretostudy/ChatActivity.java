@@ -112,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle  actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.menu_chat, R.string.menu_chat) {
+        ActionBarDrawerToggle  actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_chat, R.string.menu_chat) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
