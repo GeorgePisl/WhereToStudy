@@ -8,9 +8,11 @@ import android.os.PersistableBundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -123,5 +125,30 @@ public class BuildingActivity extends AppCompatActivity {
 
         };
         classroomList.setAdapter(adapter);
+
+        classroomList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Classroom classroom = (Classroom) adapterView.getItemAtPosition(i);
+                String name = classroom.getName();
+                String seats = String.valueOf(classroom.getAvailable());
+                Boolean airC = classroom.getAir();
+                Boolean sockets = classroom.getSock();
+                Boolean vend_mach = classroom.getVm();
+                Boolean lib = classroom.getLib();
+
+                //Toast.makeText(BuildingActivity.this, ""+airC, Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(BuildingActivity.this, Reviews.class);
+                intent.putExtra("ClassroomName", name);
+                intent.putExtra("ClassroomSeats", seats);
+                intent.putExtra("AirC", airC);
+                intent.putExtra("Sockets", sockets);
+                intent.putExtra("Vend_mach", vend_mach);
+                intent.putExtra("Library", lib);
+                intent.putExtra("BuildingName", buildingName);
+                startActivity(intent);
+            }
+        });
     }
 }

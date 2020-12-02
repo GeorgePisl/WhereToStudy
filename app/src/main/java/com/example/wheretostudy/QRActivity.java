@@ -128,11 +128,17 @@ public class QRActivity extends AppCompatActivity {
                         Toast.makeText(QRActivity.this, info_classroom.get(0) + " CLASSROOM: " + info_classroom.get(1), Toast.LENGTH_SHORT).show();
                         View mView;
                         if (info_classroom.contains("entrata")) {
-                            mView = getLayoutInflater().inflate(R.layout.custom_entry, null);
+                            //mView = getLayoutInflater().inflate(R.layout.custom_entry, null);
+                            mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+                            final TextView text = (TextView) mView.findViewById(R.id.editableText);
+                            text.setText("You are occupying a seat.");
 
                             //System.out.println("ENTRATA");
                         } else {
-                            mView = getLayoutInflater().inflate(R.layout.custom_exit, null);
+                            //mView = getLayoutInflater().inflate(R.layout.custom_exit, null);
+                            mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+                            final TextView text = (TextView) mView.findViewById(R.id.editableText);
+                            text.setText("You are freeing a seat.");
                             //System.out.println("USCITA");
                         }
                         final AlertDialog.Builder alert = new AlertDialog.Builder(QRActivity.this);
