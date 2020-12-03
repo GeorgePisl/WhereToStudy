@@ -67,6 +67,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -142,6 +143,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapView = mapFragment.getView();
+
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapActivity.this);
         Places.initialize(MapActivity.this, getString(R.string.google_maps_api));
@@ -362,8 +364,36 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (materialSearchBar.isSearchOpened())
+                    materialSearchBar.clearSuggestions();
+                    inputMethodManager.hideSoftInputFromWindow(materialSearchBar.getWindowToken(), 0);
 
+            }
+        });
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                if (materialSearchBar.isSearchOpened())
+                    materialSearchBar.clearSuggestions();
+                    inputMethodManager.hideSoftInputFromWindow(materialSearchBar.getWindowToken(), 0);
+
+            }
+        });
+
+        mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+                if (materialSearchBar.isSearchOpened())
+                    materialSearchBar.clearSuggestions();
+                    inputMethodManager.hideSoftInputFromWindow(materialSearchBar.getWindowToken(), 0);
+            }
+        });
 
         DatabaseReference f_database = FirebaseDatabase.getInstance().getReference().child("locations");
         f_database.addValueEventListener(new ValueEventListener() {
