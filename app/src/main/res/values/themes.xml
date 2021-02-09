@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <!-- <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item> -->
-        <item name="android:statusBarColor" >@color/fui_transparent</item>
+        <item name="android:statusBarColor" >#301D88</item>
         <!-- Customize your theme here. -->
     </style>
 
