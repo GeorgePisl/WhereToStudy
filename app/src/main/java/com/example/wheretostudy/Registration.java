@@ -350,7 +350,7 @@ public class Registration extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
 
                 final TextView text = (TextView) mView.findViewById(R.id.editableText);
-                text.setText("Attention!\nYou are not uploading any profile picture.\nYou will be able to upload it later in your profile page.");
+                text.setText("Attention!\nYou are not uploading any profile picture.\n");
 
                 TextView cancel, ok;
                 cancel = (TextView) mView.findViewById(R.id.btn_Cancel);
