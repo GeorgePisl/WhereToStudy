@@ -53,6 +53,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 import com.skyfishjy.library.RippleBackground;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -320,7 +321,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navUser.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         TextView navEmail = headerView.findViewById(R.id.profileEmail);
         navEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        //ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
+        ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Picasso.get()
+                .load("http://graph.facebook.com/" + userID+ "/picture?type=small")
+                .into(navPhoto);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

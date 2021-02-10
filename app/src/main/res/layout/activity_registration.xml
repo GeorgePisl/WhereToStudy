@@ -14,262 +14,282 @@
 
     </include>
 
-
-    <TextView
-        android:id="@+id/registrationText"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/scrollRegistration"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:text="Registration"
-        android:textColor="@color/purple_200"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
+        android:layout_marginTop="100dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Please complete this page to create your profile "
-        android:textColor="@color/purple_200"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registrationText"
-        tools:ignore="HardcodedText" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/profilePicture"
-        android:layout_width="106dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/image_view_border"
-        android:onClick="addProfilePic"
-        android:padding="25dp"
-        android:tint="#FFFFFF"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_photo"
-        android:contentDescription="profile"
-        tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/registrationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Registration"
+                android:textColor="@color/purple_200"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please complete this page to create your profile "
+                android:textColor="@color/purple_200"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/registrationText"
+                tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="Username"
-        android:textColor="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePicture"
-        tools:ignore="HardcodedText" />
-
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="347dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textPersonName"
-        android:paddingLeft="4dp"
-        android:textCursorDrawable="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
-
-    <TextView
-        android:id="@+id/emailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Email"
-        android:textColor="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsername"
-        tools:ignore="HardcodedText" />
-
-    <EditText
-        android:id="@+id/emailRegister"
-        android:layout_width="347dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="4dp"
-        android:textCursorDrawable="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+            <ImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="106dp"
+                android:layout_height="83dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/image_view_border"
+                android:contentDescription="profile"
+                android:onClick="addProfilePic"
+                android:padding="25dp"
+                android:tint="#FFFFFF"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description"
+                app:srcCompat="@drawable/ic_add_photo"
+                tools:ignore="HardcodedText" />
 
 
-    <TextView
-        android:id="@+id/passwordText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Password"
-        android:textColor="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailRegister"
-        tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Username"
+                android:textColor="@color/purple_200"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profilePicture"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="347dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:paddingLeft="4dp"
+                android:textCursorDrawable="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username" />
+
+            <TextView
+                android:id="@+id/emailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Email"
+                android:textColor="@color/purple_200"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextUsername"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/emailRegister"
+                android:layout_width="347dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="4dp"
+                android:textCursorDrawable="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
 
-    <EditText
-        android:id="@+id/passwordRegister"
-        android:layout_width="300dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:paddingLeft="4dp"
-        android:textCursorDrawable="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
-
-    <TextView
-        android:id="@+id/confirmPasswordText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Password"
-        android:textColor="@color/purple_200"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
-        tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/passwordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Password"
+                android:textColor="@color/purple_200"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailRegister"
+                tools:ignore="HardcodedText" />
 
 
-    <EditText
-        android:id="@+id/confirmPasswordRegister"
-        android:layout_width="300dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:paddingLeft="4dp"
-        android:textCursorDrawable="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordText" />
+            <EditText
+                android:id="@+id/passwordRegister"
+                android:layout_width="300dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingLeft="4dp"
+                android:textCursorDrawable="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordText" />
 
-    <ImageView
+            <TextView
+                android:id="@+id/confirmPasswordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Password"
+                android:textColor="@color/purple_200"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
+                tools:ignore="HardcodedText" />
+
+
+            <EditText
+                android:id="@+id/confirmPasswordRegister"
+                android:layout_width="300dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingLeft="4dp"
+                android:textCursorDrawable="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/confirmPasswordText" />
+
+            <ImageView
                 android:id="@+id/visibility_on"
                 android:layout_width="30dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="6dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="35dp"
+                android:contentDescription="show password"
                 android:tint="@color/purple_200"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/passwordRegister"
                 app:layout_constraintTop_toBottomOf="@+id/emailRegister"
                 app:srcCompat="@drawable/ic_visibility"
-                android:contentDescription="show password"
-        tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText" />
 
-    <ImageView
-        android:id="@+id/visibility_off"
-        android:layout_width="30dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="10dp"
-        android:visibility="invisible"
-        android:tint="@color/purple_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/passwordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/emailRegister"
-        app:srcCompat="@drawable/ic_visibility_off"
-        android:contentDescription="hide password"
-        tools:ignore="HardcodedText" />
+            <ImageView
+                android:id="@+id/visibility_off"
+                android:layout_width="30dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="hide password"
+                android:tint="@color/purple_200"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/passwordRegister"
+                app:layout_constraintTop_toBottomOf="@+id/emailRegister"
+                app:srcCompat="@drawable/ic_visibility_off"
+                tools:ignore="HardcodedText" />
 
-    <ImageView
-        android:id="@+id/visibility_on_confirm"
-        android:layout_width="30dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="35dp"
-        android:tint="@color/purple_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
-        app:srcCompat="@drawable/ic_visibility"
-        android:contentDescription="visibility"
-        tools:ignore="HardcodedText" />
+            <ImageView
+                android:id="@+id/visibility_on_confirm"
+                android:layout_width="30dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="35dp"
+                android:contentDescription="visibility"
+                android:tint="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
+                app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
+                app:srcCompat="@drawable/ic_visibility"
+                tools:ignore="HardcodedText" />
 
-    <ImageView
-        android:id="@+id/visibility_off_confirm"
-        android:layout_width="30dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="10dp"
-        android:visibility="invisible"
-        android:tint="@color/purple_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
-        app:srcCompat="@drawable/ic_visibility_off"
-        android:contentDescription="visibility off"
-        tools:ignore="HardcodedText" />
+            <ImageView
+                android:id="@+id/visibility_off_confirm"
+                android:layout_width="30dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="visibility off"
+                android:tint="@color/purple_200"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/confirmPasswordRegister"
+                app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
+                app:srcCompat="@drawable/ic_visibility_off"
+                tools:ignore="HardcodedText" />
 
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/my_button_bg"
-        android:onClick="register"
-        android:text="Confirm"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister"
-        tools:ignore="HardcodedText" />
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/my_button_bg"
+                android:onClick="register"
+                android:text="Confirm"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/confirmPasswordRegister"
+                tools:ignore="HardcodedText" />
 
 
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="50dp"
+                android:text="Already registered? LOGIN here"
+                android:textColor="@color/purple_200"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
+                tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginTop="13dp"
-        android:text="Already registered? LOGIN here"
-        android:textColor="@color/purple_200"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/toolbar1"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/toolbar1"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
-        tools:ignore="HardcodedText" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
