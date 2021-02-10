@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -44,7 +46,11 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,6 +85,9 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -322,11 +331,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         TextView navEmail = headerView.findViewById(R.id.profileEmail);
         navEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Picasso.get()
-                .load("http://graph.facebook.com/" + userID+ "/picture?type=small")
-                .into(navPhoto);
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        String url = "";
+        boolean fb = false;
+        boolean google = false;
+
+
+        // find the Facebook profile and get the user's id
+        for(UserInfo profile : user.getProviderData()) {
+            // check if the provider id matches "facebook.com"
+            if(FacebookAuthProvider.PROVIDER_ID.equals(profile.getProviderId())) {
+                url = profile.getPhotoUrl().toString();
+                fb = true;
+                break;
+            }
+            if(GoogleAuthProvider.PROVIDER_ID.equals(profile.getProviderId())){
+                url = profile.getPhotoUrl().toString();
+                google = true;
+                break;
+            }
+        }
+
+        if(google){
+            url = user.getProviderData().get(0).getPhotoUrl().toString();
+            url = url.replace("s96-c", "s192-c");
+            Picasso.get()
+                    .load(url)
+                    .into(navPhoto);
+        } else if(fb){
+            Picasso.get()
+                    .load(url +"?type=large&access_token="+ AccessToken.getCurrentAccessToken().getToken())
+                    .into(navPhoto);
+        } else {
+            https://i.stack.imgur.com/l60Hf.png
+            Picasso.get()
+                    .load("https://api-private.atlassian.com/users/7409ebcc9a1b721835d0f06fa4e34be7/avatar")
+                    .into(navPhoto);
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

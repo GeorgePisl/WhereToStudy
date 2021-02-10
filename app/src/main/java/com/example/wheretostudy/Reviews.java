@@ -43,8 +43,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +57,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -131,7 +135,45 @@ FirestoreRecyclerAdapter firestoreRecyclerAdapter;
         navUser.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         TextView navEmail = headerView.findViewById(R.id.profileEmail);
         navEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        //ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
+        ImageView navPhoto = headerView.findViewById(R.id.profileImageView);
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        String url = "";
+        boolean fb = false;
+        boolean google = false;
+
+
+        // find the Facebook profile and get the user's id
+        for(UserInfo profile : user.getProviderData()) {
+            // check if the provider id matches "facebook.com"
+            if(FacebookAuthProvider.PROVIDER_ID.equals(profile.getProviderId())) {
+                url = profile.getPhotoUrl().toString();
+                fb = true;
+                break;
+            }
+            if(GoogleAuthProvider.PROVIDER_ID.equals(profile.getProviderId())){
+                url = profile.getPhotoUrl().toString();
+                google = true;
+                break;
+            }
+        }
+
+        if(google){
+            url = user.getProviderData().get(0).getPhotoUrl().toString();
+            url = url.replace("s96-c", "s192-c");
+            Picasso.get()
+                    .load(url)
+                    .into(navPhoto);
+        } else if(fb){
+            Picasso.get()
+                    .load(url +"?type=large&access_token="+ AccessToken.getCurrentAccessToken().getToken())
+                    .into(navPhoto);
+        } else {
+            https://i.stack.imgur.com/l60Hf.png
+            Picasso.get()
+                    .load("https://api-private.atlassian.com/users/7409ebcc9a1b721835d0f06fa4e34be7/avatar")
+                    .into(navPhoto);
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

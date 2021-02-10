@@ -93,7 +93,7 @@ public class Login extends AppCompatActivity {
                 visible = (ImageView) findViewById(R.id.visibility_on);
                 notVisible = (ImageView) findViewById(R.id.visibility_off);
                 loginFacebook = (LoginButton) findViewById(R.id.login_button);
-                loginFacebook.setReadPermissions("email", "public_profile");
+                loginFacebook.setReadPermissions(Arrays.asList("public_profile", "email"));
 
                 loginGoogle = (SignInButton) findViewById(R.id.google_button);
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

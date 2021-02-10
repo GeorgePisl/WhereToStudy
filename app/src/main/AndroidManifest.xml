@@ -26,9 +26,11 @@
             android:label="@string/title_activity_chat" />
         <activity android:name=".QRActivity" />
         <activity android:name=".PasswordReset" />
-        <activity android:name=".Registration" />
+        <activity android:name=".Registration"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".BuildingActivity" />
-        <activity android:name=".Login">
+        <activity android:name=".Login"
+                    android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
